@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230513140644_CreateToDB")]
+    [Migration("20230513143333_CreateToDB")]
     partial class CreateToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -221,7 +221,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SSD", (string)null);
+                    b.ToTable("HardDrive", (string)null);
                 });
 
             modelBuilder.Entity("LaptopShop_API.Models.Image", b =>

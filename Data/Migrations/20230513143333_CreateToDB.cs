@@ -50,6 +50,20 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HardDrive",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ThongSo = table.Column<string>(type: "varchar(70)", nullable: false),
+                    SoKheCam = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HardDrive", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Manufacturer",
                 columns: table => new
                 {
@@ -104,20 +118,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Screen", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SSD",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ThongSo = table.Column<string>(type: "varchar(70)", nullable: false),
-                    SoKheCam = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SSD", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,6 +218,12 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_ProductDetail_HardDrive_IdHardDrive",
+                        column: x => x.IdHardDrive,
+                        principalTable: "HardDrive",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_ProductDetail_Product_IdProduct",
                         column: x => x.IdProduct,
                         principalTable: "Product",
@@ -234,12 +240,6 @@ namespace Data.Migrations
                         column: x => x.ScreenId,
                         principalTable: "Screen",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ProductDetail_SSD_IdHardDrive",
-                        column: x => x.IdHardDrive,
-                        principalTable: "SSD",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -481,6 +481,9 @@ namespace Data.Migrations
                 name: "CPU");
 
             migrationBuilder.DropTable(
+                name: "HardDrive");
+
+            migrationBuilder.DropTable(
                 name: "Product");
 
             migrationBuilder.DropTable(
@@ -488,9 +491,6 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Screen");
-
-            migrationBuilder.DropTable(
-                name: "SSD");
 
             migrationBuilder.DropTable(
                 name: "Role");

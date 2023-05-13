@@ -219,7 +219,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SSD", (string)null);
+                    b.ToTable("HardDrive", (string)null);
                 });
 
             modelBuilder.Entity("LaptopShop_API.Models.Image", b =>

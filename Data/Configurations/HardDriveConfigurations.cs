@@ -8,7 +8,7 @@ namespace LaptopShop_API.Configurations
     {
         public void Configure(EntityTypeBuilder<HardDrive> builder)
         {
-            builder.ToTable("SSD");
+            builder.ToTable("HardDrive");
             builder.HasKey(p => p.Id);
             builder.Property(a => a.Ma).IsRequired();
             builder.Property(a => a.ThongSo).HasColumnName("ThongSo").HasColumnType("varchar(70)").IsRequired();
