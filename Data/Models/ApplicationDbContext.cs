@@ -1,7 +1,5 @@
-﻿using LaptopShop_API.Models;
+﻿using LaptopShop_API.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using LaptopShop_API.Configurations;
 
 namespace LaptopShop_API.Models
 {
@@ -9,11 +7,11 @@ namespace LaptopShop_API.Models
     {
         public ApplicationDbContext()
         {
-            
+
         }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -25,7 +23,7 @@ namespace LaptopShop_API.Models
         public DbSet<Ram> Rams { get; set; }
         public DbSet<HardDrive> HardDrives { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<Manufacturer> Manufacturer { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<ProductDetail> ProductDetails { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
@@ -35,7 +33,7 @@ namespace LaptopShop_API.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-              optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3S9P0UC\SQLEXPRESS;Initial Catalog=LaptopShop_ASM;Persist Security Info=True;User ID=theuniverse;Password=theuniverse");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3S9P0UC\SQLEXPRESS;Initial Catalog=LaptopShop_ASM;Persist Security Info=True;User ID=theuniverse;Password=theuniverse");
         }
 
 
@@ -53,9 +51,9 @@ namespace LaptopShop_API.Models
             modelBuilder.ApplyConfiguration(new RamConfigurations());
             modelBuilder.ApplyConfiguration(new HardDriveConfigurations());
             modelBuilder.ApplyConfiguration(new ImageConfigurations());
-            modelBuilder.ApplyConfiguration(new ManufacturerConfigurations()); 
+            modelBuilder.ApplyConfiguration(new ManufacturerConfigurations());
             modelBuilder.ApplyConfiguration(new RoleConfigurations());
-            modelBuilder.ApplyConfiguration(new UserConfigurations()); 
+            modelBuilder.ApplyConfiguration(new UserConfigurations());
             modelBuilder.ApplyConfiguration(new VoucherConfigurations());
             modelBuilder.ApplyConfiguration(new CardVGAConfigurations());
             modelBuilder.ApplyConfiguration(new ScreenConfigurations());
