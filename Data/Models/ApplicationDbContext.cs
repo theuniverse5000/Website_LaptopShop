@@ -1,7 +1,7 @@
-﻿using LaptopShop_API.Configurations;
+﻿using Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace LaptopShop_API.Models
+namespace Data.Models
 {
     public class ApplicationDbContext : DbContext
     {
@@ -33,7 +33,8 @@ namespace LaptopShop_API.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3S9P0UC\SQLEXPRESS;Initial Catalog=LaptopShop_ASM;Persist Security Info=True;User ID=theuniverse;Password=theuniverse");
+            // optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3S9P0UC\SQLEXPRESS;Initial Catalog=LaptopShop_ASM;Persist Security Info=True;User ID=theuniverse;Password=theuniverse");
+            optionsBuilder.UseSqlServer(@"Server =.\SQLEXPRESS; Database =LaptopShop_ASM; Trusted_Connection = True;");
         }
 
 

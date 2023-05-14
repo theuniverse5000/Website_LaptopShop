@@ -1,5 +1,4 @@
-﻿using LaptopShop_API.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +9,7 @@ namespace LaptopShop_API.Controllers
     public class RamController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
-      //  ApplicationDbContext _dbContext;
+        //  ApplicationDbContext _dbContext;
         public RamController()
         {
             _dbContext = new ApplicationDbContext();
@@ -18,7 +17,7 @@ namespace LaptopShop_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ram>>> GetRam()
         {
-            if(_dbContext == null)
+            if (_dbContext == null)
             {
                 return NotFound();
             }
@@ -38,7 +37,7 @@ namespace LaptopShop_API.Controllers
         [HttpPut("id")]
         public ActionResult UpdateRam(Ram rv)
         {
-           var r = _dbContext.Rams.Find(rv.Id);
+            var r = _dbContext.Rams.Find(rv.Id);
             r.ThongSo = rv.ThongSo;
             r.Ma = rv.Ma;
             _dbContext.Rams.Update(r);

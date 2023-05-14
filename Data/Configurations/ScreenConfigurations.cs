@@ -1,8 +1,8 @@
-﻿using LaptopShop_API.Models;
+﻿using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LaptopShop_API.Configurations
+namespace Data.Configurations
 {
     public class ScreenConfigurations : IEntityTypeConfiguration<Screen>
     {

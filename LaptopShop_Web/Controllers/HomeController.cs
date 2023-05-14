@@ -1,7 +1,5 @@
-﻿using LaptopShop_API.Models;
-using LaptopShop_Web.Models;
+﻿using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace LaptopShop_Web.Controllers
 {

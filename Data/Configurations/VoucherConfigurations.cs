@@ -1,9 +1,9 @@
 ﻿
-using LaptopShop_API.Models;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LaptopShop_API.Configurations
+namespace Data.Configurations
 {
     internal class VoucherConfigurations : IEntityTypeConfiguration<Voucher>
     {

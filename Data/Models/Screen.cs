@@ -1,4 +1,4 @@
-﻿namespace LaptopShop_API.Models
+﻿namespace Data.Models
 {
     public class Screen
     {

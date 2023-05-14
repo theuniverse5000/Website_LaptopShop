@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace LaptopShop_API.Models
+namespace Data.Models
 {
     public class User 
     {

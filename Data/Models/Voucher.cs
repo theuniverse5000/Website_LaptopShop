@@ -1,6 +1,6 @@
-﻿using LaptopShop_API.Models;
+﻿using Data.Models;
 
-namespace LaptopShop_API.Models
+namespace Data.Models
 {
     public class Voucher
     {
