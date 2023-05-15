@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Models\ViewModel\" />
-    <Folder Include="Services\Implements\" />
-    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
