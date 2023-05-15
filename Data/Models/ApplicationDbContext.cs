@@ -34,7 +34,7 @@ namespace Data.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3S9P0UC\SQLEXPRESS;Initial Catalog=LaptopShop_ASM;Persist Security Info=True;User ID=theuniverse;Password=theuniverse");
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-H0KQCAN;Initial Catalog=laptop_api_15052023;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Server =.\SQLEXPRESS; Database =LaptopShop_ASM; Trusted_Connection = True;");
         }
 
 
