@@ -1,10 +1,12 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Data.Services.Implements
 {
@@ -19,6 +21,7 @@ namespace Data.Services.Implements
         {
             try
             {
+                c.Id = Guid.NewGuid();
                 context.Cpus.Add(c);
                 context.SaveChanges();
                 return true;
@@ -54,13 +57,19 @@ namespace Data.Services.Implements
             return context.Cpus.FirstOrDefault(p => p.Id == id);
             // return context.Products.SingleOrDefault(p => p.Id == id);
         }
-
-        public List<Cpu> GetCpuByName(string name)
+        public List<string> GetCpuByMa(string ma)
         {
-            return context.Cpus.Where(p => p.Name.Contains(name)).ToList();
+            var listObj = context.Cpus.ToList();
+            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
+
+            if (listObj == null)
+            {
+                return null;
+            }
+            return new List<string>();
         }
 
-        public bool UpdateCpu(Cpu c)
+        public bool UpdateCpu(Cpu c, Guid id)
         {
             try
             {// Find(id) chỉ dùng được khi id là khóa chính

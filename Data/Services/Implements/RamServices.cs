@@ -19,6 +19,7 @@ namespace Data.Services.Implements
         {
             try
             {
+                r.Id = Guid.NewGuid();
                 context.Rams.Add(r);
                 context.SaveChanges();
                 return true;
@@ -54,12 +55,18 @@ namespace Data.Services.Implements
             return context.Rams.FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Ram> GetRamByName(string name)
+        public List<string> GetRamByMa(string ma)
         {
-            throw new NotImplementedException();
+            var listObj = context.Rams.ToList();
+            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
+            if (listObj == null)
+            {
+                return null;
+            }
+            return new List<string>();
         }
 
-        public bool UpdateRam(Ram r)
+        public bool UpdateRam(Ram r, Guid id)
         {
             try
             {// Find(id) chỉ dùng được khi id là khóa chính

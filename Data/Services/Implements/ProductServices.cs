@@ -19,6 +19,7 @@ namespace Data.Services.Implements
         {
             try
             {
+                p.Id = Guid.NewGuid();
                 context.Products.Add(p);
                 context.SaveChanges();
                 return true;
@@ -54,12 +55,18 @@ namespace Data.Services.Implements
             return context.Products.FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Product> GetProductByName(string name)
+        public List<string> GetProductByMa(string ma)
         {
-            return context.Products.Where(p => p.Name.Contains(name)).ToList();
+            var listObj = context.Products.ToList();
+            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
+            if (listObj == null)
+            {
+                return null;
+            }
+            return new List<string>();
         }
 
-        public bool UpdateProduct(Product p)
+        public bool UpdateProduct(Product p, Guid id)
         {
             try
             {// Find(id) chỉ dùng được khi id là khóa chính
