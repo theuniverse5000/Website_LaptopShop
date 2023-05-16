@@ -1,19 +1,14 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Services.Implements
 {
-    internal class VouvherServices : IVoucherServices
+    internal class VoucherServices : IVoucherServices
     {
         ApplicationDbContext _context;
-        public VouvherServices()
+        public VoucherServices()
         {
-            _context= new ApplicationDbContext();
+            _context = new ApplicationDbContext();
         }
         public bool CreateVoucher(Voucher p)
         {
@@ -66,10 +61,10 @@ namespace Data.Services.Implements
                 var voucher = _context.Vouchers.Find(p.ID);
                 voucher.Ma = p.Ma;
                 voucher.Name = p.Name;
-                voucher.StartDay= p.StartDay;
+                voucher.StartDay = p.StartDay;
                 voucher.EndDay = p.EndDay;
                 voucher.GiaTri = p.GiaTri;
-                voucher.SoLuong= p.SoLuong;
+                voucher.SoLuong = p.SoLuong;
                 _context.SaveChanges();
                 return true;
             }
