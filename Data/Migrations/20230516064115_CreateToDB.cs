@@ -15,7 +15,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ten = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Ten = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     ThongSo = table.Column<string>(type: "varchar(70)", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +29,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(70)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(70)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,8 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(70)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    ThongSo = table.Column<string>(type: "nvarchar(70)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,8 +56,8 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ThongSo = table.Column<string>(type: "varchar(70)", nullable: false),
-                    SoKheCam = table.Column<int>(type: "int", nullable: false)
+                    ThongSo = table.Column<string>(type: "nvarchar(70)", nullable: false),
+                    MoTa = table.Column<string>(type: "nvarchar(150)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,9 +82,9 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ThongSo = table.Column<string>(type: "varchar(70)", nullable: false),
+                    ThongSo = table.Column<string>(type: "nvarchar(70)", nullable: false),
                     SoKheCam = table.Column<int>(type: "int", nullable: false),
-                    MoTa = table.Column<string>(type: "varchar(200)", nullable: false)
+                    MoTa = table.Column<string>(type: "nvarchar(300)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,8 +96,8 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleName = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", nullable: false),
+                    RoleName = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(1000)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -110,10 +111,10 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ma = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ten = table.Column<string>(type: "varchar(100)", nullable: false),
-                    KichCo = table.Column<string>(type: "varchar(50)", nullable: false),
-                    TanSo = table.Column<string>(type: "varchar(20)", nullable: false),
-                    ChatLieu = table.Column<string>(type: "varchar(100)", nullable: false)
+                    Ten = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    KichCo = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    TanSo = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    ChatLieu = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,7 +143,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     IDManufacturer = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -162,7 +163,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "varchar(256)", nullable: false),
-                    Password = table.Column<string>(type: "varchar(256)", nullable: false),
+                    Password = table.Column<string>(type: "varchar(256)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     IdRole = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -183,12 +184,12 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Ma = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Ma = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     ImportPrice = table.Column<decimal>(type: "decimal", nullable: false),
                     Price = table.Column<decimal>(type: "decimal", nullable: false),
                     AvailableQuantity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     IdProduct = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdColor = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdRam = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -247,11 +248,11 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Ma = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Ma = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SoDienThoaiKhachHang = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    HoTenKhachHang = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    DiaChiKhachHang = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    SoDienThoaiKhachHang = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    HoTenKhachHang = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    DiaChiKhachHang = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VoucherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -278,7 +279,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(100)", nullable: true)
                 },
                 constraints: table =>
                 {
