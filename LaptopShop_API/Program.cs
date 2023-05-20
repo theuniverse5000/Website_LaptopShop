@@ -14,6 +14,8 @@ builder.Services.AddTransient<ICartServices, CartServices>();
 builder.Services.AddTransient<ICartDetailServices, CartDetailServices>();
 builder.Services.AddTransient<IProductDetailServices, ProductDetailServices>();
 
+builder.Services.AddTransient<IColorServices, ColorServices>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

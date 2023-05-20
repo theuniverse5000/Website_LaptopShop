@@ -14,7 +14,6 @@ namespace Data.Services.Interfaces
         Task<bool> Delete(Guid id);
         Task<bool> Add(Color Color);
         Task<Color> GetById(Guid id);
-        Task<List<string>> GetByName(string name);
-        
+        Task<bool> CheckMa(string ma);
     }
 }

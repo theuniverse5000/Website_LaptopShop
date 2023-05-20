@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+
 
 namespace Data.Services.Implements
 {
@@ -35,6 +38,15 @@ namespace Data.Services.Implements
             }
         }
 
+        public async Task<bool> CheckMa(string ma)
+        {
+            var temp= await context.Colors.ToListAsync();  var list=temp.FirstOrDefault(v=>v.Ma==ma);
+            if (list==null) { 
+                return false;
+            }return true;
+            
+        }
+
         public async Task<bool> Delete(Guid id)
         {
             try
@@ -42,7 +54,7 @@ namespace Data.Services.Implements
                 var listObj = await context.Colors.ToListAsync();
                 var temp = listObj.FirstOrDefault(v => v.Id == id);
 
-                context.Remove(temp);
+                context.Attach(temp);
                 await Task.FromResult<Color>(context.Colors.Remove(temp).Entity);
                 await context.SaveChangesAsync();
                 return true;
@@ -65,27 +77,10 @@ namespace Data.Services.Implements
 
         public async Task<Color> GetById(Guid id)
         {
-            var listObj = await context.Colors.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Id == id);
-
-            if (temp == null)
-            {
-                return new Color();
-            }
-            return temp;
+            return await context.Colors.FirstOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<List<string>> GetByName(string name)
-        {
-            var listObj = await context.Colors.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Equals(name));
 
-            if (listObj == null)
-            {
-                return null;
-            }
-            return new List<string>();
-        }
 
         public async Task<bool> Update(Color Color, Guid id)
         {
@@ -94,7 +89,9 @@ namespace Data.Services.Implements
                 var listObj = await context.Colors.ToListAsync();
                 var temp = listObj.FirstOrDefault(v => v.Id == id);
 
-                context.Remove(temp);
+                temp.Name = Color.Name;
+
+                context.Attach(temp);
                 await Task.FromResult<Color>(context.Colors.Update(temp).Entity);
                 await context.SaveChangesAsync();
                 return true;
@@ -104,5 +101,6 @@ namespace Data.Services.Implements
                 return false;
             }
         }
+
     }
 }
