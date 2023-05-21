@@ -24,6 +24,10 @@ namespace LaptopShop_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateProduct(Product obj)
         {
+            if (await _productServices.GetProductByName(obj.Name))
+            {
+                return NotFound("Đã có tên");
+            }
             if (await _productServices.CreateProduct(obj))
             {
                 return Ok("Thêm thành công");

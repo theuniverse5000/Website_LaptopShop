@@ -23,7 +23,11 @@ namespace LaptopShop_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRam(Ram ram) 
         {
-            if (await _ramServices.CreateRam(ram))
+            if (await _ramServices.GetRamByMa(ram.Ma))
+            {
+                return NotFound("Đã có mã");
+            }
+            else if (await _ramServices.CreateRam(ram))
             {
                 return Ok("Thêm thành công");
             }

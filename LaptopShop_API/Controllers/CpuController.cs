@@ -23,7 +23,11 @@ namespace LaptopShop_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateCpu(Cpu obj)
         {
-            if (await _cpuServices.CreateCpu(obj))
+            if (await _cpuServices.GetCpuByMa(obj.Ma))
+            {
+                return NotFound("Đã có mã");
+            }
+            else if (await _cpuServices.CreateCpu(obj))
             {
                 return Ok("Thêm thành công");
             }

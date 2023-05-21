@@ -80,7 +80,7 @@ namespace Data.Services.Implements
                 else
                 {
                     var ram = context.Rams.Find(id);
-                    ram.Ma = r.Ma;
+                    //ram.Ma = r.Ma;
                     ram.MoTa = r.MoTa;
                     ram.ThongSo = r.ThongSo;
                     ram.SoKheCam = r.SoKheCam;
