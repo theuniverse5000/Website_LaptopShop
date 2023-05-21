@@ -95,7 +95,6 @@ namespace Data.Services.Implements
             {
                 
                 var h = context.HardDrives.FirstOrDefault(v => v.Id == id);
-                h.Ma = harddrive.Ma;
                 h.ThongSo = harddrive.ThongSo;
                 h.MoTa = harddrive.MoTa;
                 context.Update(h);

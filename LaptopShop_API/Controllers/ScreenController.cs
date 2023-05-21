@@ -33,10 +33,6 @@ namespace LaptopShop_API.Controllers
 
         // GET api/<ScreenController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<ScreenController>
         [HttpPost]

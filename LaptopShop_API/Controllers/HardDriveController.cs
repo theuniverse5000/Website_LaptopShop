@@ -33,10 +33,7 @@ namespace LaptopShop_API.Controllers
 
         // GET api/<HardDriveController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+
 
         // POST api/<HardDriveController>
         [HttpPost]
@@ -44,7 +41,7 @@ namespace LaptopShop_API.Controllers
         {
             if (await HDservices.Add(hardDrive))
             {
-                return Ok("Bạn đã thê thành công");
+                return Ok("Bạn đã thêm thành công");
             }
             else return NotFound("Không thể thêm được");
         }

@@ -95,8 +95,6 @@ namespace Data.Services.Implements
                 c.Password = u.Password;
                 c.Status = u.Status;
                 c.IdRole = u.IdRole;
-               
-
                 _context.Update(c);
                 await _context.SaveChangesAsync();
                 return true;

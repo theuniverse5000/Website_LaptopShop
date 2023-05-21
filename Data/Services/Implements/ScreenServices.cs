@@ -89,7 +89,6 @@ namespace Data.Services.Implements
             try
             {
                 var s = context.Screens.FirstOrDefault(v => v.Id == id);
-                s.Ma = screen.Ma;
                 s.Ten = screen.Ten;
                 s.KichCo = screen.KichCo;
                 s.TanSo = screen.TanSo;
