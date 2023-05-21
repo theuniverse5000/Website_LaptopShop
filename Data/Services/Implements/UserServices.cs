@@ -86,15 +86,18 @@ namespace Data.Services.Implements
             return new List<string>();
         }
 
-        public async Task<bool> Update(User user, Guid id)
+        public async Task<bool> Update(User u)
         {
             try
             {
-                var listObj = await _context.Users.ToListAsync();
-                var temp = listObj.FirstOrDefault(v => v.Id == id);
+               var c = _context.Users.Find(u.Id);
+                c.Username = u.Username;
+                c.Password = u.Password;
+                c.Status = u.Status;
+                c.IdRole = u.IdRole;
+               
 
-                _context.Update(temp);
-                await Task.FromResult<User>(_context.Users.Update(temp).Entity);
+                _context.Update(c);
                 await _context.SaveChangesAsync();
                 return true;
             }

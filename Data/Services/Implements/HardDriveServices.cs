@@ -21,7 +21,12 @@ namespace Data.Services.Implements
         {
             try
             {
-                harddrive.Id = Guid.NewGuid();
+                var h = context.HardDrives.FirstOrDefault(x => x.Id == harddrive.Id);
+               
+                h.Id = Guid.NewGuid();
+                h.Ma = harddrive.Ma;
+                h.ThongSo = harddrive.ThongSo;
+                h.MoTa = harddrive.MoTa;
                 await context.AddAsync(harddrive);
                 await context.SaveChangesAsync();
                 return true;
@@ -88,11 +93,12 @@ namespace Data.Services.Implements
         {
             try
             {
-                var listObj = await context.HardDrives.ToListAsync();
-                var temp = listObj.FirstOrDefault(v => v.Id == id);
-
-                context.Update(temp);
-                await Task.FromResult<HardDrive>(context.HardDrives.Update(temp).Entity);
+                
+                var h = context.HardDrives.FirstOrDefault(v => v.Id == id);
+                h.Ma = harddrive.Ma;
+                h.ThongSo = harddrive.ThongSo;
+                h.MoTa = harddrive.MoTa;
+                context.Update(h);
                 await context.SaveChangesAsync();
                 return true;
             }

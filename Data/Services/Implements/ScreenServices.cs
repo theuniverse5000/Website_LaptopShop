@@ -61,14 +61,15 @@ namespace Data.Services.Implements
 
         public async Task<Screen> GetById(Guid id)
         {
-            var listObj = await context.Screens.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Id == id);
+            //var listObj = await context.Screens.ToListAsync();
+            //var temp = listObj.FirstOrDefault(v => v.Id == id);
 
-            if (temp == null)
-            {
-                return new Screen();
-            }
-            return temp;
+            //if (temp == null)
+            //{
+            //    return new Screen();
+            //}
+            //return temp;
+            return context.Screens.FirstOrDefault(v => v.Id == id);
         }
 
         public async Task<List<string>> GetByName(string name)
@@ -87,11 +88,13 @@ namespace Data.Services.Implements
         {
             try
             {
-                var listObj = await context.Screens.ToListAsync();
-                var temp = listObj.FirstOrDefault(v => v.Id == id);
-
-                context.Update(temp);
-                await Task.FromResult<Screen>(context.Screens.Update(temp).Entity);
+                var s = context.Screens.FirstOrDefault(v => v.Id == id);
+                s.Ma = screen.Ma;
+                s.Ten = screen.Ten;
+                s.KichCo = screen.KichCo;
+                s.TanSo = screen.TanSo;
+                s.ChatLieu = screen.ChatLieu;
+                context.Update(s);
                 await context.SaveChangesAsync();
                 return true;
             }
