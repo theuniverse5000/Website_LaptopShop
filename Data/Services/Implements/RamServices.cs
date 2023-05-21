@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,18 @@ namespace Data.Services.Implements
         {
             context = new ApplicationDbContext();
         }
-        public bool CreateRam(Ram r)
+
+        public async Task<bool> CreateRam(Ram r)
         {
             try
             {
-                r.Id = Guid.NewGuid();
-                context.Rams.Add(r);
-                context.SaveChanges();
-                return true;
+                if (r == null) return false;
+                else
+                {
+                    await context.Rams.AddAsync(r);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -30,14 +35,18 @@ namespace Data.Services.Implements
             }
         }
 
-        public bool DeleteRam(Guid id)
+        public async Task<bool> DeleteRam(Guid id)
         {
             try
-            {// Find(id) chỉ dùng được khi id là khóa chính
-                var ram = context.Rams.Find(id);
-                context.Rams.Remove(ram);
-                context.SaveChanges();
-                return true;
+            {
+                var ram = await context.Rams.FindAsync(id);
+                if(ram == null) return false;
+                else
+                {
+                    context.Rams.Remove(ram); 
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -45,40 +54,40 @@ namespace Data.Services.Implements
             }
         }
 
-        public List<Ram> GetAllRams()
+        public async Task<List<Ram>> GetAllRams()
         {
-            return context.Rams.ToList();
+            return await context.Rams.ToListAsync();
         }
 
-        public Ram GetRamById(Guid id)
+        public async Task<Ram> GetRamById(Guid id)
         {
-            return context.Rams.FirstOrDefault(p => p.Id == id);
+            return await context.Rams.FindAsync(id);
         }
 
-        public List<string> GetRamByMa(string ma)
+        public async Task<bool> GetRamByMa(string ma)
         {
-            var listObj = context.Rams.ToList();
-            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
-            if (listObj == null)
-            {
-                return null;
-            }
-            return new List<string>();
+            var ram = await context.Rams.ToListAsync();
+            var r = ram.FirstOrDefault(x => x.Ma == ma);
+            if (r == null) return false;
+            else return true;
         }
 
-        public bool UpdateRam(Ram r, Guid id)
+        public async Task<bool> UpdateRam(Ram r, Guid id)
         {
             try
-            {// Find(id) chỉ dùng được khi id là khóa chính
-                var ram = context.Rams.Find(r.Id);
-                ram.Ma = r.Ma;
-                ram.ThongSo = r.ThongSo;
-                ram.SoKheCam = r.SoKheCam;
-                ram.MoTa = r.MoTa;
-                // Có thể sửa thêm thuộc tính
-                context.Rams.Update(ram);
-                context.SaveChanges();
-                return true;
+            {
+                if (r == null) return false;
+                else
+                {
+                    var ram = context.Rams.Find(id);
+                    ram.Ma = r.Ma;
+                    ram.MoTa = r.MoTa;
+                    ram.ThongSo = r.ThongSo;
+                    ram.SoKheCam = r.SoKheCam;
+                    context.Rams.Update(ram);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {

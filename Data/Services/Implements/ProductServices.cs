@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +16,18 @@ namespace Data.Services.Implements
         {
             context = new ApplicationDbContext();
         }
-        public bool CreateProduct(Product p)
+
+        public async Task<bool> CreateProduct(Product p)
         {
             try
             {
-                p.Id = Guid.NewGuid();
-                context.Products.Add(p);
-                context.SaveChanges();
-                return true;
+                if (p == null) return false;
+                else
+                {
+                    await context.Products.AddAsync(p);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -30,14 +35,18 @@ namespace Data.Services.Implements
             }
         }
 
-        public bool DeleteProduct(Guid id)
+        public async Task<bool> DeleteProduct(Guid id)
         {
             try
-            {// Find(id) chỉ dùng được khi id là khóa chính
-                var product = context.Products.Find(id);
-                context.Products.Remove(product);
-                context.SaveChanges();
-                return true;
+            {
+                var product = await context.Products.FindAsync(id);
+                if (product == null) return false;
+                else
+                {
+                    context.Products.Remove(product);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -45,39 +54,38 @@ namespace Data.Services.Implements
             }
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
-            return context.Products.ToList();
+            return await context.Products.ToListAsync();
         }
 
-        public Product GetProductById(Guid id)
+        public async Task<Product> GetProductById(Guid id)
         {
-            return context.Products.FirstOrDefault(p => p.Id == id);
+            return await context.Products.FindAsync(id);
         }
 
-        public List<string> GetProductByMa(string ma)
+        public async Task<bool> GetProductByName(string name)
         {
-            var listObj = context.Products.ToList();
-            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
-            if (listObj == null)
-            {
-                return null;
-            }
-            return new List<string>();
+            var product = await context.Products.ToListAsync();
+            var p = product.FirstOrDefault(x => x.Name == name);
+            if (p == null) return false;
+            else return true;
         }
 
-        public bool UpdateProduct(Product p, Guid id)
+        public async Task<bool> UpdateProduct(Product p, Guid id)
         {
             try
-            {// Find(id) chỉ dùng được khi id là khóa chính
-                var product = context.Products.Find(p.Id);
-                product.Name = p.Name;
-                product.IDManufacturer = p.IDManufacturer;
-                product.Manufacturer = p.Manufacturer;
-                // Có thể sửa thêm thuộc tính
-                context.Products.Update(product);
-                context.SaveChanges();
-                return true;
+            {
+                if(p == null) return false;
+                else
+                {
+                    var product = context.Products.Find(p.Id);
+                    product.Name = p.Name;
+                    product.IDManufacturer = p.IDManufacturer;
+                    context.Products.Update(product);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {

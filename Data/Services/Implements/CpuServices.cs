@@ -17,14 +17,19 @@ namespace Data.Services.Implements
         {
             context = new ApplicationDbContext();
         }
-        public bool CreateCpu(Cpu c)
+
+        public async Task<bool> CreateCpu(Cpu c)
         {
             try
             {
-                c.Id = Guid.NewGuid();
-                context.Cpus.Add(c);
-                context.SaveChanges();
-                return true;
+                if (c == null) return false;
+                else
+                {
+                    await context.Cpus.AddAsync(c);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
+
             }
             catch (Exception)
             {
@@ -32,14 +37,18 @@ namespace Data.Services.Implements
             }
         }
 
-        public bool DeleteCpu(Guid id)
+        public async Task<bool> DeleteCpu(Guid id)
         {
             try
-            {// Find(id) chỉ dùng được khi id là khóa chính
-                var cpu = context.Cpus.Find(id);
-                context.Cpus.Remove(cpu);
-                context.SaveChanges();
-                return true;
+            {
+                var cpu = await context.Cpus.FindAsync(id);
+                if (cpu == null) return false;
+                else
+                {
+                    context.Cpus.Remove(cpu);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -47,39 +56,39 @@ namespace Data.Services.Implements
             }
         }
 
-        public List<Cpu> GetAllCpus()
+        public async Task<List<Cpu>> GetAllCpus()
         {
-            return context.Cpus.ToList();
+            return await context.Cpus.ToListAsync();
         }
 
-        public Cpu GetCpuById(Guid id)
+        public async Task<Cpu> GetCpuById(Guid id)
         {
-            return context.Cpus.FirstOrDefault(p => p.Id == id);
-            // return context.Products.SingleOrDefault(p => p.Id == id);
-        }
-        public List<string> GetCpuByMa(string ma)
-        {
-            var listObj = context.Cpus.ToList();
-            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
-
-            if (listObj == null)
-            {
-                return null;
-            }
-            return new List<string>();
+            return await context.Cpus.FindAsync(id);
         }
 
-        public bool UpdateCpu(Cpu c, Guid id)
+        public async Task<bool> GetCpuByMa(string ma)
+        {
+            var cpu = await context.Cpus.ToListAsync();
+            var t = cpu.FirstOrDefault(x => x.Ma == ma);
+            if (t == null) return false;
+            else return true;
+        }
+
+        public async Task<bool> UpdateCpu(Cpu c, Guid id)
         {
             try
-            {// Find(id) chỉ dùng được khi id là khóa chính
-                var cpu = context.Cpus.Find(c.Id);
-                cpu.Ma = c.Ma;
-                cpu.Name = c.Name;
-                // Có thể sửa thêm thuộc tính
-                context.Cpus.Update(cpu);
-                context.SaveChanges();
-                return true;
+            {
+                if (c == null) return false;
+                else
+                {
+                    var cpu = context.Cpus.Find(c.Id);
+                    cpu.Name = c.Name;
+                    cpu.Ma = c.Ma;
+                    cpu.ThongSo = c.ThongSo;
+                    context.Cpus.Update(cpu);
+                    await context.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {

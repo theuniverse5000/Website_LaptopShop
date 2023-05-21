@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,49 +9,52 @@ namespace LaptopShop_API.Controllers
     [ApiController]
     public class RamController : ControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IRamServices _ramServices;
         //  ApplicationDbContext _dbContext;
-        public RamController()
+        public RamController(IRamServices ramServices)
         {
-            _dbContext = new ApplicationDbContext();
+            _ramServices = ramServices;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ram>>> GetRam()
+        public async Task<ActionResult> GetAllRam()
         {
-            if (_dbContext == null)
-            {
-                return NotFound();
-            }
-            return await _dbContext.Rams.ToListAsync();
+            return Ok(await _ramServices.GetAllRams());
         }
         [HttpPost]
-        public ActionResult CreateRam(Ram rv)
+        public async Task<ActionResult> CreateRam(Ram ram) 
         {
-            Ram r = new Ram();
-            r.Id = Guid.NewGuid();
-            r.Ma = rv.Ma;
-            r.ThongSo = rv.ThongSo;
-            _dbContext.Rams.Add(r);
-            _dbContext.SaveChanges();
-            return Ok("Thêm thành công");
+            if (await _ramServices.CreateRam(ram))
+            {
+                return Ok("Thêm thành công");
+            }
+            else return NotFound("Thêm thất bại");
         }
         [HttpPut("id")]
-        public ActionResult UpdateRam(Ram rv)
+        public async Task<ActionResult> UpdateRam(Ram ram, Guid id)
         {
-            var r = _dbContext.Rams.Find(rv.Id);
-            r.ThongSo = rv.ThongSo;
-            r.Ma = rv.Ma;
-            _dbContext.Rams.Update(r);
-            _dbContext.SaveChanges();
-            return Ok("Bạn đã cập nhật thành công");
+            if (await _ramServices.UpdateRam(ram, id))
+            {
+                return Ok("Sửa thành công");
+            }
+            else return NotFound("Sửa thất bại");
         }
         [HttpDelete("id")]
-        public ActionResult DeleteRam(Guid Id)
+        public async Task<ActionResult> DeleteRam(Guid id)
         {
-            var r = _dbContext.Rams.Find(Id);
-            _dbContext.Rams.Remove(r);
-            _dbContext.SaveChanges();
-            return Ok("Bạn đã xóa thành công");
+            if (await _ramServices.DeleteRam(id))
+            {
+                return Ok("Xóa thành công");
+            }
+            else return NotFound("Xóa thất bại");
+        }
+        [HttpGet("id")]
+        public async Task<ActionResult> GetRamById(Guid id)
+        {
+            if (await _ramServices.GetRamById(id) == null)
+            {
+                return NotFound("Không tìm thấy");
+            }
+            else return Ok(await _ramServices.GetRamById(id));
         }
     }
 }

@@ -9,11 +9,11 @@ namespace Data.Services.Interfaces
 {
     public interface IRamServices
     {
-        public bool CreateRam(Ram r);
-        public bool UpdateRam(Ram r, Guid id);
-        public bool DeleteRam(Guid id);
-        public List<Ram> GetAllRams();
-        public Ram GetRamById(Guid id);
-        public List<string> GetRamByMa(string ma);
+        Task<bool> CreateRam(Ram r);
+        Task<bool> UpdateRam(Ram r, Guid id);
+        Task<bool> DeleteRam(Guid id);
+        Task<List<Ram>> GetAllRams();
+        Task<Ram> GetRamById(Guid id);
+        Task<bool> GetRamByMa(string ma);
     }
 }

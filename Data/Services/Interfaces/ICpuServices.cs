@@ -9,11 +9,11 @@ namespace Data.Services.Interfaces
 {
     public interface ICpuServices
     {
-        public bool CreateCpu(Cpu c);
-        public bool UpdateCpu(Cpu c, Guid id);
-        public bool DeleteCpu(Guid id);
-        public List<Cpu> GetAllCpus();
-        public Cpu GetCpuById(Guid id);
-        public List<string> GetCpuByMa(string ma);
+        Task<bool> CreateCpu(Cpu c);
+        Task<bool> UpdateCpu(Cpu c, Guid id);
+        Task<bool> DeleteCpu(Guid id);
+        Task<List<Cpu>> GetAllCpus();
+        Task<Cpu> GetCpuById(Guid id);
+        Task<bool> GetCpuByMa(string ma);
     }
 }

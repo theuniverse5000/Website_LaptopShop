@@ -9,11 +9,11 @@ namespace Data.Services.Interfaces
 {
     public interface IProductServices
     {
-        public bool CreateProduct(Product p);
-        public bool UpdateProduct(Product p, Guid id);
-        public bool DeleteProduct(Guid id);
-        public List<Product> GetAllProducts();
-        public Product GetProductById(Guid id);
-        public List<string> GetProductByMa(string ma);
+        Task<bool>  CreateProduct(Product p);
+        Task<bool> UpdateProduct(Product p, Guid id);
+        Task<bool> DeleteProduct(Guid id);
+        Task<List<Product>> GetAllProducts();
+        Task<Product> GetProductById(Guid id);
+        Task<bool> GetProductByName(string name);
     }
 }
