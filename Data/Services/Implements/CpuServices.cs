@@ -83,7 +83,7 @@ namespace Data.Services.Implements
                 {
                     var cpu = context.Cpus.Find(c.Id);
                     cpu.Name = c.Name;
-                    cpu.Ma = c.Ma;
+                    //cpu.Ma = c.Ma;
                     cpu.ThongSo = c.ThongSo;
                     context.Cpus.Update(cpu);
                     await context.SaveChangesAsync();

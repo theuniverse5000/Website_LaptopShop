@@ -80,7 +80,7 @@ namespace Data.Services.Implements
                 else
                 {
                     var product = context.Products.Find(p.Id);
-                    product.Name = p.Name;
+                    //product.Name = p.Name;
                     product.IDManufacturer = p.IDManufacturer;
                     context.Products.Update(product);
                     await context.SaveChangesAsync();
