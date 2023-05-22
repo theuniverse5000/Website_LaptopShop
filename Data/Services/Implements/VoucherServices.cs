@@ -1,22 +1,30 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Services.Implements
 {
-    internal class VoucherServices : IVoucherServices
+    public class VoucherServices : IVoucherServices
     {
-        ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbcontext;
         public VoucherServices()
         {
-            _context = new ApplicationDbContext();
+            _dbcontext= new ApplicationDbContext();
         }
-        public bool CreateVoucher(Voucher p)
+        public async Task<bool> CreateVoucher(Voucher p)
         {
             try
             {
-                _context.Vouchers.Add(p);
-                _context.SaveChanges();
-                return true;
+                if (p == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    await _dbcontext.Vouchers.AddAsync(p);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -24,14 +32,18 @@ namespace Data.Services.Implements
             }
         }
 
-        public bool DeleteVoucher(Guid id)
+        public async Task<bool> DeleteVoucher(Guid id)
         {
             try
             {
-                dynamic voucher = _context.Vouchers.Find(id);
-                _context.Vouchers.Remove(voucher);
-                _context.SaveChanges();
-                return true;
+                var vc = await _dbcontext.Vouchers.FindAsync(id);
+                if (vc != null) { return false; }
+                else
+                {
+                    _dbcontext.Vouchers.Remove(vc);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -39,34 +51,48 @@ namespace Data.Services.Implements
             }
         }
 
-        public List<Voucher> GetAllVouchers()
+        public async Task<List<Voucher>> GetAllVouchers()
         {
-            return _context.Vouchers.ToList();
+            return await _dbcontext.Vouchers.ToListAsync();
         }
 
-        public Voucher GetVoucherById(Guid id)
+        public async Task<Voucher> GetVoucherById(Guid id)
         {
-            return _context.Vouchers.FirstOrDefault(p => p.ID == id);
+            return await _dbcontext.Vouchers.FindAsync(id);
         }
 
-        public List<Voucher> GetVoucherByName(string name)
+        public async Task<bool> GetVoucherByMa(string ma)
         {
-            return _context.Vouchers.Where(p => p.Equals(name)).ToList();
+            var vc = await _dbcontext.Vouchers.ToListAsync();
+            var v = vc.FirstOrDefault(x => x.Ma == ma);
+            if (v == null)
+            {
+                return false;
+            }
+            else return true;
         }
 
-        public bool UpdateVoucher(Voucher p)
+        public async Task<bool> UpdateVoucher(Voucher p, Guid id)
         {
             try
             {
-                var voucher = _context.Vouchers.Find(p.ID);
-                voucher.Ma = p.Ma;
-                voucher.Name = p.Name;
-                voucher.StartDay = p.StartDay;
-                voucher.EndDay = p.EndDay;
-                voucher.GiaTri = p.GiaTri;
-                voucher.SoLuong = p.SoLuong;
-                _context.SaveChanges();
-                return true;
+                if (p == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var vc = _dbcontext.Vouchers.Find(p.ID);
+                    vc.Ma= p.Ma;
+                    vc.Name= p.Name;
+                    vc.StartDay= p.StartDay;
+                    vc.EndDay= p.EndDay;
+                    vc.GiaTri = p.GiaTri;
+                    vc.SoLuong = p.SoLuong;
+                    _dbcontext.Vouchers.Update(vc);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {

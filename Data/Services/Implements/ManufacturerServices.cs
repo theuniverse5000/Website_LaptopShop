@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,20 +9,27 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Implements
 {
-    internal class ManufacturerServices : IManufacturerServices
+    public class ManufacturerServices : IManufacturerServices
     {
-        ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbcontext;
         public ManufacturerServices()
         {
-            _context= new ApplicationDbContext();
+            _dbcontext= new ApplicationDbContext();
         }
-        public bool CreateManufacturer(Manufacturer p)
+        public async Task<bool> CreateManufacturer(Manufacturer p)
         {
             try
             {
-                _context.Manufacturers.Add(p);
-                _context.SaveChanges();
-                return true;
+                if (p == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    await _dbcontext.Manufacturers.AddAsync(p);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -29,44 +37,59 @@ namespace Data.Services.Implements
             }
         }
 
-        public bool DeleteManufacturer(Guid id)
+        public async Task<bool> DeleteManufacturer(Guid id)
         {
             try
             {
-                dynamic manufacturer = _context.Manufacturers.Find(id);
-                _context.Manufacturers.Remove(manufacturer);
-                _context.SaveChanges();
-                return true;
+                var mf = await _dbcontext.Manufacturers.FindAsync(id);
+                if (mf == null) return false;
+                else
+                {
+                    _dbcontext.Manufacturers.Remove(mf);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
-                return false;
+                return false; 
             }
         }
 
-        public List<Manufacturer> GetAllManufacturers()
+        public async Task<List<Manufacturer>> GetAllManufacturers()
         {
-            return _context.Manufacturers.ToList();
+            return await _dbcontext.Manufacturers.ToListAsync();
         }
 
-        public Manufacturer GetManufacturerById(Guid id)
+        public async Task<Manufacturer> GetManufacturerById(Guid id)
         {
-            return _context.Manufacturers.FirstOrDefault(p => p.Id == id);
+            return await _dbcontext.Manufacturers.FindAsync(id);
         }
 
-        public List<Manufacturer> GetManufacturerByName(string name)
+        public async Task<bool> GetManufacturerByName(string name)
         {
-            return _context.Manufacturers.Where(p => p.Equals(name)).ToList();
+            var mf = await _dbcontext.Manufacturers.ToListAsync();
+            var mfer = mf.FirstOrDefault(x => x.Name == name);
+            if (mfer == null) return false;
+            else
+            {
+                return true;
+            }
         }
 
-        public bool UpdateManufacturer(Manufacturer p)
+        public async Task<bool> UpdateManufacturer(Manufacturer p, Guid id)
         {
             try
             {
-                var manufacturer = _context.Manufacturers.Find(p.Id);
-                manufacturer.Name = p.Name;
-                _context.SaveChanges();
-                return true;
+                if (p == null) return false;
+                else
+                {
+                    var mf = _dbcontext.Manufacturers.Find(p.Id);
+                    mf.Name = p.Name;
+                    _dbcontext.Manufacturers.Update(mf);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {

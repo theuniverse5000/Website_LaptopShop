@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Interfaces
 {
-    internal interface ICardVGAServices
+    public interface ICardVGAServices
     {
-        public bool CreateCardVGA(CardVGA p);
-        public bool UpdateCardVGA(CardVGA p);
-        public bool DeleteCardVGA(Guid id);
-        public List<CardVGA> GetAllCardVGAs();
-        public CardVGA GetCardVGAById(Guid id);
-        public List<CardVGA> GetCardVGAByName(string name);
+        Task<bool> CreateCardVGA(CardVGA p);
+        Task<bool> UpdateCardVGA(CardVGA p, Guid id);
+        Task<bool> DeleteCardVGA(Guid id);
+        Task<List<CardVGA>> GetAllCardVGAs();
+        Task<CardVGA> GetCardVGAById(Guid id);
+        Task<bool> GetCardVGAByMa(string ma);
     }
 }

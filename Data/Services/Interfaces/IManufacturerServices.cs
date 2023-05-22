@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Interfaces
 {
-    internal interface IManufacturerServices
+    public interface IManufacturerServices
     {
-        public bool CreateManufacturer(Manufacturer p);
-        public bool UpdateManufacturer(Manufacturer p);
-        public bool DeleteManufacturer(Guid id);
-        public List<Manufacturer> GetAllManufacturers();
-        public Manufacturer GetManufacturerById(Guid id);
-        public List<Manufacturer> GetManufacturerByName(string name);
+        Task<bool> CreateManufacturer(Manufacturer p);
+        Task<bool> UpdateManufacturer(Manufacturer p, Guid Id);
+        Task<bool> DeleteManufacturer(Guid id);
+        Task<List<Manufacturer>> GetAllManufacturers();
+        Task<Manufacturer> GetManufacturerById(Guid id);
+        Task<bool> GetManufacturerByName(string name);
     }
 }

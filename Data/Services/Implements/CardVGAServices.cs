@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,27 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Implements
 {
-    internal class CardVGAServices : ICardVGAServices
+    public class CardVGAServices : ICardVGAServices
     {
-        ApplicationDbContext _context;
-        public bool CreateCardVGA(CardVGA p)
+        private readonly ApplicationDbContext _dbcontext;
+        public CardVGAServices()
+        {
+            _dbcontext= new ApplicationDbContext();
+        }
+        public async Task<bool> CreateCardVGA(CardVGA p)
         {
             try
             {
-                _context.CardVGAs.Add(p);
-                _context.SaveChanges();
-                return true;
+                if (p == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    await _dbcontext.CardVGAs.AddAsync(p);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -25,14 +37,18 @@ namespace Data.Services.Implements
             }
         }
 
-        public bool DeleteCardVGA(Guid id)
+        public async Task<bool> DeleteCardVGA(Guid id)
         {
             try
             {
-                dynamic cardVGA = _context.CardVGAs.Find(id);
-                _context.CardVGAs.Remove(cardVGA);
-                _context.SaveChanges();
-                return true;
+                var cvga = await _dbcontext.CardVGAs.FindAsync(id);
+                if (cvga == null) return false;
+                else
+                {
+                    _dbcontext.CardVGAs.Remove(cvga);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -40,31 +56,45 @@ namespace Data.Services.Implements
             }
         }
 
-        public List<CardVGA> GetAllCardVGAs()
+        public async Task<List<CardVGA>> GetAllCardVGAs()
         {
-            return _context.CardVGAs.ToList();
+            return await _dbcontext.CardVGAs.ToListAsync();
         }
 
-        public CardVGA GetCardVGAById(Guid id)
+        public async Task<CardVGA> GetCardVGAById(Guid id)
         {
-            return _context.CardVGAs.FirstOrDefault(p => p.Id == id);
+            return await _dbcontext.CardVGAs.FindAsync(id);
         }
 
-        public List<CardVGA> GetCardVGAByName(string name)
+        public async Task<bool> GetCardVGAByMa(string ma)
         {
-            return _context.CardVGAs.Where(p => p.Equals(name)).ToList();
+            var cvga = await _dbcontext.CardVGAs.ToListAsync();
+            var card = cvga.FirstOrDefault(x => x.Ma == ma);
+            if (card == null) return false;
+            else
+            {
+                return true;
+            }
         }
 
-        public bool UpdateCardVGA(CardVGA p)
+        public async Task<bool> UpdateCardVGA(CardVGA p, Guid id)
         {
             try
             {
-                var cardVGA = _context.CardVGAs.Find(p.Id);
-                cardVGA.Ten = p.Ten;
-                cardVGA.Ma= p.Ma;
-                cardVGA.ThongSo = p.ThongSo;
-                _context.SaveChanges();
-                return true;
+                if (p == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var cvga = _dbcontext.CardVGAs.Find(p.Id);
+                    cvga.Ma= p.Ma;
+                    cvga.Ten= p.Ten;
+                    cvga.ThongSo= p.ThongSo;
+                    _dbcontext.CardVGAs.Update(cvga);
+                    await _dbcontext.SaveChangesAsync();
+                    return true;
+                }
             }
             catch (Exception)
             {

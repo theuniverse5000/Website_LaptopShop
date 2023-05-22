@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Data.Services.Interfaces
 {
-    internal interface IVoucherServices
+    public interface IVoucherServices
     {
-        public bool CreateVoucher(Voucher p);
-        public bool UpdateVoucher(Voucher p);
-        public bool DeleteVoucher(Guid id);
-        public List<Voucher> GetAllVouchers();
-        public Voucher GetVoucherById(Guid id);
-        public List<Voucher> GetVoucherByName(string name);
+        Task<bool> CreateVoucher(Voucher p);
+        Task<bool> UpdateVoucher(Voucher p, Guid id);
+        Task<bool> DeleteVoucher(Guid id);
+        Task<List<Voucher>> GetAllVouchers();
+        Task<Voucher> GetVoucherById(Guid id);
+        Task<bool> GetVoucherByMa(string ma);
     }
 }
