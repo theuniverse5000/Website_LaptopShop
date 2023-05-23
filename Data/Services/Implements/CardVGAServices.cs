@@ -88,7 +88,7 @@ namespace Data.Services.Implements
                 else
                 {
                     var cvga = _dbcontext.CardVGAs.Find(p.Id);
-                    cvga.Ma= p.Ma;
+                   
                     cvga.Ten= p.Ten;
                     cvga.ThongSo= p.ThongSo;
                     _dbcontext.CardVGAs.Update(cvga);

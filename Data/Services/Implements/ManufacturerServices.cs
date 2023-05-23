@@ -85,7 +85,7 @@ namespace Data.Services.Implements
                 else
                 {
                     var mf = _dbcontext.Manufacturers.Find(p.Id);
-                    mf.Name = p.Name;
+                    
                     _dbcontext.Manufacturers.Update(mf);
                     await _dbcontext.SaveChangesAsync();
                     return true;

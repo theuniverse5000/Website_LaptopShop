@@ -83,7 +83,7 @@ namespace Data.Services.Implements
                 else
                 {
                     var vc = _dbcontext.Vouchers.Find(p.ID);
-                    vc.Ma= p.Ma;
+                    
                     vc.Name= p.Name;
                     vc.StartDay= p.StartDay;
                     vc.EndDay= p.EndDay;
