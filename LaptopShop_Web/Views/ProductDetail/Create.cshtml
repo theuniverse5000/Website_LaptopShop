@@ -1,0 +1,127 @@
+﻿@using Data.Models;
+@model Data.Models.ViewModels.ProductDetailView
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ProductDetail</h4>
+<hr/>
+<form class="row g-3 was-validated" asp-action="Create" method="post">
+    <div class="form-floating col-md-4">
+        <input asp-for="Ma" type="text" class="form-control" placeholder="Ma" required>
+        <label for="">Mã chi tiết sản phẩm</label>
+        <span asp-validation-for="Ma" class="text-danger"></span>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Không được để trống</div>
+    </div> <br>
+    <div class="form-floating col-md-4">
+        <input asp-for="ImportPrice" type="number" class="form-control" placeholder="ImportPrice"
+               required>
+        <label for="">Giá nhập</label>
+        <span asp-validation-for="ImportPrice" class="text-danger"></span>
+    </div>
+    <div class="form-floating col-md-4">
+        <input asp-for="Price" type="number" class="form-control" placeholder="giabangoc" required>
+        <label for="">Giá bán</label>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-floating col-md-4">
+        <input asp-for="AvailableQuantity" type="number" class="form-control" placeholder="AvailableQuantity" required>
+        <label for="">Số lượng </label>
+    </div>
+    <div class="form-floating col-md-6">
+        <input asp-for="Description" type="text" class="form-control" placeholder="Description" required>
+        <label for="">Mô tả</label>
+    </div>
+    <div class="form-floating col-md-6">
+        <input asp-for="Status" type="text" class="form-control" placeholder="Status" required>
+        <label for="">Tình trạng</label>
+    </div>
+ 
+    <div class="form-group col-md-6">
+        <label for="">Sản phẩm</label>
+        <select class="form-select" asp-for="NameProduct">
+            @foreach (var t in (List<Product>)ViewBag.listProduct)
+            {
+                <option>@t.Name</option>
+            }
+
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="">Mã màu sắc</label>
+        <select class="form-select" asp-for="MaColor">
+            @foreach (var t in (List<Color>)ViewBag.listColor)
+            {
+                <option>@t.Ma</option>
+            }
+
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="">Ổ cứng</label>
+        <select class="form-select" asp-for="MaHardDrive">
+            @foreach (var t in (List<HardDrive>)ViewBag.listHardDrive)
+            {
+                <option>@t.Ma</option>
+            }
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="">RAM</label>
+        <select class="form-select" asp-for="MaRam">
+            @foreach (var t in (List<Ram>)ViewBag.listRam)
+            {
+                <option>@t.Ma</option>
+            }
+
+        </select>
+    </div>
+         <div class="form-group col-md-6">
+        <label for="">CPU</label>
+        <select class="form-select" asp-for="MaCpu">
+            @foreach (var t in (List<Cpu>)ViewBag.listCpu)
+            {
+                <option>@t.Ma</option>
+            }
+
+        </select>
+    </div>
+    
+<div class="form-group col-md-6">
+        <label for="">Card đồ họa</label>
+        <select class="form-select" asp-for="MaCardVGA">
+            @foreach (var t in (List<CardVGA>)ViewBag.listCardVGA)
+            {
+                <option>@t.Ma</option>
+            }
+
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="">Màn hình</label>
+        <select class="form-select" asp-for="MaManHinh">
+            @foreach (var t in (List<Screen>)ViewBag.listScreen)
+            {
+                <option>@t.Ma</option>
+            }
+
+        </select>
+    </div>
+
+    <p></p>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
