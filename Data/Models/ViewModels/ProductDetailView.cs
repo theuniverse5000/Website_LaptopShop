@@ -37,7 +37,6 @@
         public string ThongSoCpu { get; set; }
         public string NameCpu { get; set; }
         public string NameColor { get; set; }
-        public string MaProduct { get; set; }
         public string NameProduct { get; set; }
         public string MaHardDrive { get; set; }
         public string MaColor { get; set; }
@@ -47,11 +46,11 @@
         public string KichCoManHinh { get; set; }
         public string TanSoManHinh { get; set; }
         public string ChatLieuManHinh { get; set; }
+        public string MaCardVGA { get; set; }
         public string TenCardVGA { get; set; }
         public string ThongSoCardVGA { get; set; }
 
         public string LinkImage { get; set; }
-        //public byte[] HinhAnh { get; set; } = null!;
 
     }
 }
