@@ -16,7 +16,7 @@ namespace LaptopShop_API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllProductDetails()
         {
-            var listProductDetail = await _productDetailServices.GetAllProductDetails();
+            var listProductDetail = await _productDetailServices.GetAllProductDetailsPhunData();
             return Ok(listProductDetail);
 
         }
