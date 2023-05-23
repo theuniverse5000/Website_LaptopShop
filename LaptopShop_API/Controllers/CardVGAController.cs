@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Data.Services.Implements;
 using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,14 +11,15 @@ namespace LaptopShop_API.Controllers
     public class CardVGAController : ControllerBase
     {
         private readonly ICardVGAServices _cardServices;
-        public CardVGAController(ICardVGAServices cardServices)
+        public CardVGAController()
         {
-            _cardServices = cardServices;
+            _cardServices = new CardVGAServices();
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllCardVGA() 
+        public async Task<ActionResult> GetAllCardVGA() 
         {
-            return Ok(await _cardServices.GetAllCardVGAs());
+            var listCardVGA = await _cardServices.GetAllCardVGAs();
+            return Ok(listCardVGA);
         }
         [HttpPost]
         public async Task<ActionResult> CreateCardVGA(CardVGA cardVGA) 

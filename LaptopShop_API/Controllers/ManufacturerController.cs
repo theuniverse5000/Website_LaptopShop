@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Data.Services.Implements;
 using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,15 @@ namespace LaptopShop_API.Controllers
     public class ManufacturerController : ControllerBase
     {
         private readonly IManufacturerServices _manufacturerServices;
-        public ManufacturerController(IManufacturerServices manufacturer)
+        public ManufacturerController()
         {
-            _manufacturerServices = manufacturer;
+            _manufacturerServices = new ManufacturerServices();
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllManufacturer() 
+        public async Task<ActionResult> GetAllManufacturer() 
         {
-           return Ok(await _manufacturerServices.GetAllManufacturers());
+           var listManufacturer = await _manufacturerServices.GetAllManufacturers();
+            return Ok(listManufacturer);
         }
         [HttpPost]
         public async Task<ActionResult> CreateManufacturer(Manufacturer mf)

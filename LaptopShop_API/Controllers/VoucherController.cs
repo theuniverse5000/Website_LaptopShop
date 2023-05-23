@@ -11,14 +11,15 @@ namespace LaptopShop_API.Controllers
     public class VoucherController : ControllerBase
     {
         private readonly IVoucherServices _voucherServices;
-        public VoucherController(IVoucherServices voucherServices)
+        public VoucherController()
         {
-            _voucherServices = voucherServices;
+            _voucherServices= new VoucherServices();
         }
         [HttpGet]
         public async Task<IActionResult> GetALlVoucher()
         {
-            return Ok(await _voucherServices.GetAllVouchers());
+            var listVoucher = await _voucherServices.GetAllVouchers();
+            return Ok(listVoucher);
         }
         [HttpPost]
         public async Task<ActionResult> CreateVoucher(Voucher vc)
