@@ -31,7 +31,7 @@ namespace LaptopShop_API.Controllers
             {
                 if (lstUser.Any(p => p.Username == u.Username))
                 {
-                    return BadRequest("Mã đã tồn tại");
+                    return BadRequest("UserName đã tồn tại");
                 }
                 else
 
