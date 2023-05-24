@@ -8,6 +8,7 @@ namespace Data.Services.Interfaces
         Task<bool> CreateBill(Bill obj);
         Task<bool> UpdateBill(Bill obj);
         Task<bool> DeleteBill(Guid id);
+        Task<bool> IsMaBill(string ma);
         Task<List<Bill>> GetAllBills();
         Task<Bill> GetBillById(Guid id);
         Task<List<BillView>> GetAllBillJoinFull();
