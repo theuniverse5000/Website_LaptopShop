@@ -35,7 +35,7 @@ namespace LaptopShop_API.Controllers
         public async Task<ActionResult> Create(Screen screen)
         {
             var listScreen = await _ScreenSV.GetAllScreen();
-            if (!listScreen.Any( p=> p.Ma == screen.Ma)){
+            if (listScreen.Any( p=> p.Ma == screen.Ma)){
                 return BadRequest("Mã đã tồn tại");
             }
             else if (await _ScreenSV.Add(screen))

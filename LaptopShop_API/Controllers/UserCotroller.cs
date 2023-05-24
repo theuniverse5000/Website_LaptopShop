@@ -26,12 +26,15 @@ namespace LaptopShop_API.Controllers
         public async Task<ActionResult> CreateUser(User u)
         {
             var lstUser = await userServices.GetAllUser();
-            if (!lstUser.Any(p => p.Username == u.Username)){
-                return BadRequest("Mã đã tồn tại");
-            }
-            else
+
             if (u != null)
             {
+                if (lstUser.Any(p => p.Username == u.Username))
+                {
+                    return BadRequest("Mã đã tồn tại");
+                }
+                else
+
                 if (await userServices.Add(u))
                 {
                     return Ok("Bạn thêm thành công");

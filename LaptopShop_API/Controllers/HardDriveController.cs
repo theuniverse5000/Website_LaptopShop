@@ -35,7 +35,7 @@ namespace LaptopShop_API.Controllers
         public async Task<ActionResult> CreateHD(HardDrive hardDrive)
         {
             var listHD = await HDservices.GetAllHardDrive();
-            if (!listHD.Any(p => p.Ma == hardDrive.Ma))
+            if (listHD.Any(p => p.Ma == hardDrive.Ma))
             {
                 return BadRequest("Mã đã tồn tại");
             }else if (await HDservices.Add(hardDrive))
