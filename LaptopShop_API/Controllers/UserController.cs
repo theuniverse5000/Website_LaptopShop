@@ -8,10 +8,10 @@ namespace LaptopShop_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserCotroller : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserServices userServices;
-        public UserCotroller()
+        public UserController()
         {
             userServices = new UserServices();
         }
@@ -46,8 +46,8 @@ namespace LaptopShop_API.Controllers
                 return BadRequest("Không tồn tại");
             }
         }
-        [HttpPut]
-        public async Task<ActionResult> UpdateUser(User u)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUser(User u,Guid id)
         {
             if (u != null)
             {
