@@ -25,6 +25,11 @@ namespace LaptopShop_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateUser(User u)
         {
+            var lstUser = await userServices.GetAllUser();
+            if (!lstUser.Any(p => p.Username == u.Username)){
+                return BadRequest("Mã đã tồn tại");
+            }
+            else
             if (u != null)
             {
                 if (await userServices.Add(u))
@@ -45,7 +50,7 @@ namespace LaptopShop_API.Controllers
             {
                 if(await userServices.Update(u))
                 {
-                    return Ok("Bạn update thành công");
+                    return Ok("Bạn sửa thành công");
                 }
                 return BadRequest("Không thành công !");
             }

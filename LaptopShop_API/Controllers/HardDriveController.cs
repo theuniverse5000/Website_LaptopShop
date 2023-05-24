@@ -11,12 +11,10 @@ namespace LaptopShop_API.Controllers
     [ApiController]
     public class HardDriveController : ControllerBase
     {
-        ApplicationDbContext context;
         IHardDriveServices HDservices;
 
         public HardDriveController()
         {
-            context = new ApplicationDbContext();
             HDservices = new HardDriveServices();
         }
         // GET: api/<HardDriveController>
@@ -31,15 +29,16 @@ namespace LaptopShop_API.Controllers
             return await HDservices.GetAllHardDrive();
         }
 
-        // GET api/<HardDriveController>/5
-        [HttpGet("{id}")]
-
 
         // POST api/<HardDriveController>
         [HttpPost]
         public async Task<ActionResult> CreateHD(HardDrive hardDrive)
         {
-            if (await HDservices.Add(hardDrive))
+            var listHD = await HDservices.GetAllHardDrive();
+            if (!listHD.Any(p => p.Ma == hardDrive.Ma))
+            {
+                return BadRequest("Mã đã tồn tại");
+            }else if (await HDservices.Add(hardDrive))
             {
                 return Ok("Bạn đã thêm thành công");
             }

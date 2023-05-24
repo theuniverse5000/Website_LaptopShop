@@ -24,6 +24,7 @@ namespace Data.Services.Implements
             try
             {
                 user.Id = Guid.NewGuid();
+
                 await _context.AddAsync(user);
                 await _context.SaveChangesAsync();
                 return true;

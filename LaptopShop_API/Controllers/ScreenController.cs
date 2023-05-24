@@ -13,32 +13,32 @@ namespace LaptopShop_API.Controllers
     [ApiController]
     public class ScreenController : ControllerBase
     {
-        ApplicationDbContext context;
         IScreenServices _ScreenSV;
         public ScreenController()
         {
-            context = new ApplicationDbContext();
             _ScreenSV = new ScreenServices();
         }
         // GET: api/<ScreenController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Screen>>> GetScreen()
         {
-            if (context == null)
+            if (_ScreenSV == null )
             {
                 return NotFound();
             }
             return await _ScreenSV.GetAllScreen();
         }
 
-        // GET api/<ScreenController>/5
-        [HttpGet("{id}")]
-
+       
         // POST api/<ScreenController>
         [HttpPost]
         public async Task<ActionResult> Create(Screen screen)
         {
-            if (await _ScreenSV.Add(screen))
+            var listScreen = await _ScreenSV.GetAllScreen();
+            if (!listScreen.Any( p=> p.Ma == screen.Ma)){
+                return BadRequest("Mã đã tồn tại");
+            }
+            else if (await _ScreenSV.Add(screen))
             {
                 return Ok("Bạn đã thêm thành công");
             }
@@ -51,9 +51,9 @@ namespace LaptopShop_API.Controllers
         {
             if (await _ScreenSV.Update(screen, id))
             {
-                return Ok("Bạn đã thêm thành ");
+                return Ok("Bạn đã sửa thành cônh");
             }
-            else return NotFound("Không thể thêm được");
+            else return NotFound("Không thể sửa được");
         }
 
         // DELETE api/<ScreenController>/5
