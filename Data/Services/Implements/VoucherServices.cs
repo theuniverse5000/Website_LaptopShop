@@ -36,14 +36,13 @@ namespace Data.Services.Implements
         {
             try
             {
-                var vc = await _dbcontext.Vouchers.FindAsync(id);
-                if (vc != null) { return false; }
-                else
-                {
-                    _dbcontext.Vouchers.Remove(vc);
-                    await _dbcontext.SaveChangesAsync();
-                    return true;
-                }
+                var listVoucher = await _dbcontext.Vouchers.ToListAsync();
+                var vc = listVoucher.FirstOrDefault(p => p.ID == id);
+
+                _dbcontext.Remove(vc);
+                await Task.FromResult<Voucher>(_dbcontext.Vouchers.Remove(vc).Entity);
+                await _dbcontext.SaveChangesAsync();
+                return true;
             }
             catch (Exception)
             {

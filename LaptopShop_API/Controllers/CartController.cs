@@ -43,7 +43,7 @@ namespace LaptopShop_API.Controllers
             {
                 if (await _cartServices.UpdateCart(obj))
                 {
-                    return Ok("Bạn update thành công");
+                    return Ok("Thành công");
                 }
                 return BadRequest("Không thành công !");
             }
