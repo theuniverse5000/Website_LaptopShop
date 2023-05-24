@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace Data.Services.Implements
 {
-    public class ColorServices:IColorServices
+    public class ColorServices : IColorServices
     {
         private readonly ApplicationDbContext context;
         public ColorServices()
@@ -40,11 +40,14 @@ namespace Data.Services.Implements
 
         public async Task<bool> CheckMa(string ma)
         {
-            var temp= await context.Colors.ToListAsync();  var list=temp.FirstOrDefault(v=>v.Ma==ma);
-            if (list==null) { 
+            var temp = await context.Colors.ToListAsync();
+            var list = temp.FirstOrDefault(v => v.Ma == ma);
+            if (list == null)
+            {
                 return false;
-            }return true;
-            
+            }
+            return true;
+
         }
 
         public async Task<bool> Delete(Guid id)
@@ -54,7 +57,7 @@ namespace Data.Services.Implements
                 var listObj = await context.Colors.ToListAsync();
                 var temp = listObj.FirstOrDefault(v => v.Id == id);
 
-                context.Attach(temp);
+                context.Remove(temp);
                 await Task.FromResult<Color>(context.Colors.Remove(temp).Entity);
                 await context.SaveChangesAsync();
                 return true;

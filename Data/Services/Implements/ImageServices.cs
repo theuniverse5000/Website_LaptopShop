@@ -33,6 +33,17 @@ namespace Data.Services.Implements
             }
         }
 
+        public async Task<bool> CheckMa(string ma)
+        {
+            var temp = await context.Images.ToListAsync();
+            var obj = temp.FirstOrDefault(v => v.Ma == ma);
+            if (obj == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public async Task<bool> DeleteAsync(Guid id)
         {
             try
@@ -63,26 +74,7 @@ namespace Data.Services.Implements
 
         public async Task<Image> GetByIdAsync(Guid id)
         {
-            var listObj = await context.Images.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Id == id);
-
-            if (temp == null)
-            {
-                return new Image();
-            }
-            return temp;
-        }
-
-        public async Task<List<string>> GetByMaAsync(string ma)
-        {
-            var listObj = await context.Images.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Equals(ma));
-
-            if (listObj == null)
-            {
-                return null;
-            }
-            return new List<string>();
+            return await context.Images.FirstOrDefaultAsync(v => v.Id == id);
         }
 
         public async Task<bool> UpdateAsync(Image image, Guid id)
@@ -91,7 +83,8 @@ namespace Data.Services.Implements
             {
                 var listObj = await context.Images.ToListAsync();
                 var temp = listObj.FirstOrDefault(v => v.Id == id);
-                    
+                temp.LinkImage = image.LinkImage;
+                temp.IdProductDetail= image.IdProductDetail;    
                 context.Remove(temp);
                 await Task.FromResult<Image>(context.Images.Update(temp).Entity);
                 await context.SaveChangesAsync();
@@ -102,5 +95,6 @@ namespace Data.Services.Implements
                 return false;
             }
         }
+
     }
 }

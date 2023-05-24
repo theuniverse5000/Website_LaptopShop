@@ -15,7 +15,7 @@ namespace Data.Services.Interfaces
         public Task<bool> DeleteAsync(Guid id);
         public Task<bool> AddAsync(Image image);
         public Task<Image> GetByIdAsync(Guid id);
-        public Task<List<string>> GetByMaAsync(string ma);
+        public Task<bool> CheckMa(string ma);
 
     }
 }

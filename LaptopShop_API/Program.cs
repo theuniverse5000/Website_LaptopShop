@@ -16,8 +16,10 @@ builder.Services.AddTransient<IProductDetailServices, ProductDetailServices>();
 builder.Services.AddTransient<IProductServices, ProductServices>();
 builder.Services.AddTransient<ICpuServices, CpuServices>();
 builder.Services.AddTransient<IRamServices, RamServices>();
-
+builder.Services.AddTransient<ICardVGAServices, CardVGAServices>();
 builder.Services.AddTransient<IColorServices, ColorServices>();
+builder.Services.AddTransient<IImageServices, ImageServices>();
+builder.Services.AddTransient<IRoleServices, RoleServices>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
