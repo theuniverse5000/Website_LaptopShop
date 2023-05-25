@@ -8,11 +8,9 @@ namespace Data.Services.Implements
     public class CartDetailServices : ICartDetailServices
     {
         ApplicationDbContext _dbContext;
-        IProductDetailServices _productDetailServices;
         public CartDetailServices()
         {
             _dbContext = new ApplicationDbContext();
-            _productDetailServices = new ProductDetailServices();
         }
 
         public async Task<bool> CreateCartDetail(CartDetail obj)

@@ -8,10 +8,10 @@ namespace LaptopShop_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserCotroller : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserServices userServices;
-        public UserCotroller()
+        public UserController()
         {
             userServices = new UserServices();
         }
@@ -25,8 +25,16 @@ namespace LaptopShop_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateUser(User u)
         {
+            var lstUser = await userServices.GetAllUser();
+
             if (u != null)
             {
+                if (lstUser.Any(p => p.Username == u.Username))
+                {
+                    return BadRequest("UserName đã tồn tại");
+                }
+                else
+
                 if (await userServices.Add(u))
                 {
                     return Ok("Bạn thêm thành công");
@@ -38,14 +46,14 @@ namespace LaptopShop_API.Controllers
                 return BadRequest("Không tồn tại");
             }
         }
-        [HttpPut]
-        public async Task<ActionResult> UpdateUser(User u)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUser(User u,Guid id)
         {
             if (u != null)
             {
                 if(await userServices.Update(u))
                 {
-                    return Ok("Bạn update thành công");
+                    return Ok("Bạn sửa thành công");
                 }
                 return BadRequest("Không thành công !");
             }

@@ -14,7 +14,6 @@ namespace Data.Services.Interfaces
         Task<bool> Delete(Guid id);
         Task<bool> Add(Role role);
         Task<Role> GetById(Guid id);
-        Task<List<string>> GetByName(string name);
-        
+        Task<bool> GetByName(string name);
     }
 }

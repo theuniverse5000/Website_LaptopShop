@@ -64,16 +64,18 @@ namespace Data.Services.Implements
 
         public async Task<Role> GetById(Guid id)
         {
-            var listObj = await context.Roles.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Id == id);
-
-            if (temp == null)
-            {
-                return new Role();
-            }
-            return temp;
+            return await context.Roles.FirstOrDefaultAsync(v => v.Id == id);
         }
 
+        public async Task<bool> GetByName(string name)
+        {
+            var temp = await context.Roles.ToListAsync();
+            var obj = temp.FirstOrDefault(v=> v.RoleName == name);
+            if (obj == null)
+            {
+                return false;
+            }return true;
+        }
 
         public async Task<bool> Update(Role role, Guid id)
         {
@@ -81,7 +83,9 @@ namespace Data.Services.Implements
             {
                 var listObj = await context.Roles.ToListAsync();
                 var temp = listObj.FirstOrDefault(v => v.Id == id);
-
+                temp.RoleName = role.RoleName;
+                temp.Status = role.Status;
+                temp.Description = role.Description;
                 context.Remove(temp);
                 await Task.FromResult<Role>(context.Roles.Update(temp).Entity);
                 await context.SaveChangesAsync();
@@ -93,16 +97,16 @@ namespace Data.Services.Implements
             }
         }
 
-        async Task<List<string>> IRoleServices.GetByName(string name)
-        {
-            var listObj = await context.Roles.ToListAsync();
-            var temp = listObj.FirstOrDefault(v => v.Equals(name));
+        //async Task<List<string>> IRoleServices.GetByName(string name)
+        //{
+        //    var listObj = await context.Roles.ToListAsync();
+        //    var temp = listObj.FirstOrDefault(v => v.Equals(name));
 
-            if (listObj == null)
-            {
-                return null;
-            }
-            return new List<string>();
-        }
+        //    if (listObj == null)
+        //    {
+        //        return null;
+        //    }
+        //    return new List<string>();
+        //}
     }
 }

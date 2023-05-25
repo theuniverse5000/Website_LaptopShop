@@ -21,29 +21,27 @@ namespace LaptopShop_API.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> CreateBill(Bill obj)
+        public async Task<IActionResult> CreateBill(Bill obj)
         {
-            if (obj != null)
+            if (await _billServices.IsMaBill(obj.Ma))
             {
-                if (await _billServices.CreateBill(obj))
-                {
-                    return Ok("Bạn thêm thành công");
-                }
-                return BadRequest("Không thành công !");
+                return BadRequest("Mã đã tồn tại !");
             }
-            else
+            else if (await _billServices.CreateBill(obj))
             {
-                return BadRequest("Hóa đơn không tồn tại");
+                return Ok("Bạn thêm thành công");
             }
+            return BadRequest("Không thành công !");
+
         }
-        [HttpPut]
+        [HttpPut("id")]
         public async Task<ActionResult> UpdateBill(Bill obj)
         {
             if (obj != null)
             {
                 if (await _billServices.UpdateBill(obj))
                 {
-                    return Ok("Bạn thêm thành công");
+                    return Ok("Thành công");
                 }
                 return BadRequest("Không thành công !");
             }

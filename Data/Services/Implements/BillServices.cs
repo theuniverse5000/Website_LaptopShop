@@ -8,11 +8,9 @@ namespace Data.Services.Implements
     public class BillServices : IBillServices
     {
         ApplicationDbContext _dbContext;
-        IProductDetailServices _productDetailServices;
         public BillServices()
         {
             _dbContext = new ApplicationDbContext();
-            _productDetailServices = new ProductDetailServices();
         }
 
         public async Task<bool> CreateBill(Bill obj)
@@ -64,6 +62,19 @@ namespace Data.Services.Implements
         public async Task<Bill> GetBillById(Guid id)
         {
             return await _dbContext.Bills.FindAsync(id);
+        }
+
+        public async Task<bool> IsMaBill(string ma)
+        {
+            var listBill = await _dbContext.Bills.ToListAsync();
+            var b = listBill.FirstOrDefault(x => x.Ma == ma);
+            if (b != null)
+            {
+                return true;
+            }
+            else return false;
+
+
         }
 
         public async Task<bool> UpdateBill(Bill obj)

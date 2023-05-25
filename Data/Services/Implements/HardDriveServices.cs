@@ -21,12 +21,7 @@ namespace Data.Services.Implements
         {
             try
             {
-                var h = context.HardDrives.FirstOrDefault(x => x.Id == harddrive.Id);
-               
-                h.Id = Guid.NewGuid();
-                h.Ma = harddrive.Ma;
-                h.ThongSo = harddrive.ThongSo;
-                h.MoTa = harddrive.MoTa;
+                harddrive.Id = Guid.NewGuid();
                 await context.AddAsync(harddrive);
                 await context.SaveChangesAsync();
                 return true;
