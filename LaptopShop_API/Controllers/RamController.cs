@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Data.Services.Implements;
 using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,9 @@ namespace LaptopShop_API.Controllers
     {
         private readonly IRamServices _ramServices;
         //  ApplicationDbContext _dbContext;
-        public RamController(IRamServices ramServices)
+        public RamController()
         {
-            _ramServices = ramServices;
+            _ramServices = new RamServices();
         }
         [HttpGet]
         public async Task<ActionResult> GetAllRam()

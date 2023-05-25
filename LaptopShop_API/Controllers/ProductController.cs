@@ -12,9 +12,9 @@ namespace LaptopShop_API.Controllers
     {
         private readonly IProductServices _productServices;
 
-        public ProductController(IProductServices productServices)
+        public ProductController()
         {
-            _productServices = productServices;
+            _productServices = new ProductServices();
         }
         [HttpGet]
         public async Task<ActionResult> GetAllProducts()

@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Data.Services.Implements;
 using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,9 @@ namespace LaptopShop_API.Controllers
     public class CpuController : ControllerBase
     {
         private readonly ICpuServices _cpuServices;
-        public CpuController(ICpuServices cpuServices)
+        public CpuController()
         {
-            _cpuServices = cpuServices;
+            _cpuServices = new CpuServices();
         }
         [HttpGet]
         public async Task<IActionResult> GetAllCpu()
