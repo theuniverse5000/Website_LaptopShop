@@ -71,7 +71,7 @@ namespace Data.Services.Implements
                 else
                 {
                     x.Quantity = obj.Quantity;
-                    x.Price = obj.Price;
+                    //  x.Price = obj.Price;
                     _dbContext.BillDetails.Update(x);
                     await _dbContext.SaveChangesAsync();
                     return true;

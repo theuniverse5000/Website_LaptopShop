@@ -1,0 +1,134 @@
+﻿@*@model IEnumerable<Data.Models.ViewModels.CartDetailView>*@
+@using System.Globalization;
+@using Data.Models.ViewModels;
+@{
+    //var ThongBaoCong = TempData["ThongBaoCong"] as string;
+    //var ThongBaoTru = TempData["ThongBaoTru"] as string;
+    //var ThongBaoDelete = TempData["ThongBaoDelete"] as string;
+    decimal TongTien = 0;
+    
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Sản phẩm</th>
+            <th scope="col">Giá</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Hành động</th>
+            <th scope="col">Tổng tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in (List<CartDetailView>)ViewBag.itemsInCart)
+        {
+        
+            decimal TongTienOneProduct = @i.Price * @i.Quantity;
+            @TongTien += TongTienOneProduct;
+            <tr class="table-secondary">
+                <th scope="row">@i.NameProduct ( @i.NameCpu - @i.ThongSoCpu,
+               @i.ThongSoRam - Số khe cắm:@i.SoKheCamRam, @i.ThongSoHardDrive - @i.MoTaHardDrive, 
+               @i.TenCardVGA - @i.ThongSoCardVGA, @i.KichCoManHinh, @i.TanSoManHinh, @i.ChatLieuManHinh)
+                </th>
+                <td>@i.Price.ToString("N0", CultureInfo.CreateSpecificCulture("vi-VN"))</td>
+                <td>@i.Quantity</td>
+
+                <td>
+                    <a class="btn btn-outline-success" asp-action="CongOneQuantity" asp-route-id="@i.Id">+</a>
+                    <a class="btn btn-outline-warning" asp-action="TruOneQuantity" asp-route-id="@i.Id">-</a>
+                    <a class="btn btn-outline-danger" asp-action="DeleteItemInCart" asp-route-id="@i.Id">Xóa</a>
+                </td>
+                <td>@TongTienOneProduct</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-3">
+        <strong>1. Thông tin khách hàng</strong>
+        <form action="~/Bill/CreateBill" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+                <label class="form-label">Họ tên</label>
+                <input type="text" class="form-control" name="hoTenKhachHang">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Điện thoại</label>
+                <input type="text" class="form-control" name="sdtKhachHang">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" class="form-control" name="diaChiKhachHang">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mã giảm giá</label>
+                <input type="text" class="form-control" name="maVoucher">
+            </div>
+            <button class="btn btn-warning btn-lg" type="submit"> Đặt hàng</button>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <div class="mb-4">
+            <div class="form-group">
+                <label for="comment">
+                    <strong>2. Ghi chú</strong>
+                </label>
+                <textarea class="form-control" rows="5" id="ghi chú "></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <strong>3. Phương thức thanh toán </strong>
+        <fieldset class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                <label class="form-check-label" for="optionsRadios1">
+                    Thanh toán tại cửa hàng
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                <label class="form-check-label" for="optionsRadios2">
+                    Thanh toán khi nhận hàng (COD)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                <label class="form-check-label" for="optionsRadios2">
+                    Thanh toán bằng chuyển khoản ngân hàng
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                <label class="form-check-label" for="optionsRadios2">
+                    Thanh toán trả góp
+                </label>
+            </div>
+        </fieldset>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-xl-3">
+            <div class="d-flex justify-content-between" style="font-weight: 500;">
+                <p class="mb-2">Tổng tiền</p>
+                <p class="mb-2">$@TongTien.ToString("N0", CultureInfo.CreateSpecificCulture("vi-VN"))</p>
+            </div>
+
+            <div class="d-flex justify-content-between" style="font-weight: 500;">
+                <p class="mb-0">Phí ship</p>
+                <p class="mb-0">$0</p>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
+                <p class="mb-2">Tổng</p>
+                <p class="mb-2">$@TongTien.ToString("N0", CultureInfo.CreateSpecificCulture("vi-VN"))</p>
+            </div>
+
+            <button type="button" class="btn btn-lg btn-primary btn-block btn-lg">
+                <div class="d-flex justify-content-between">
+                    <span>Thanh toán</span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </div>
+</div>

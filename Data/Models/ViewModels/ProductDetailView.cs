@@ -3,17 +3,12 @@
     public class ProductDetailView
     {
         public Guid Id { get; set; }
-
         public string Ma { get; set; }
-
         public decimal ImportPrice { get; set; }
         public decimal Price { get; set; }
         public int AvailableQuantity { get; set; }
         public int Status { get; set; }
-
         public string Description { get; set; }
-
-
         public Guid IdProduct { get; set; }
         public Guid IdColor { get; set; }
         public Guid IdRam { get; set; }
