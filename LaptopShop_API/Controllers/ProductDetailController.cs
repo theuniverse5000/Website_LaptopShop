@@ -67,7 +67,9 @@ namespace LaptopShop_API.Controllers
         [HttpGet("id")]
         public async Task<ActionResult> GetProductDetailById(Guid id)
         {
-            var productDetail = await _productDetailServices.GetProductDetailById(id);
+            // var productDetail = await _productDetailServices.GetProductDetailById(id);
+            var listProductDetail = await _productDetailServices.GetAllProductDetailsPhunData();
+            var productDetail = listProductDetail.FirstOrDefault(x => x.Id == id);
             return Ok(productDetail);
         }
     }

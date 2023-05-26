@@ -9,9 +9,13 @@ namespace LaptopShop_API.Controllers
     public class BillDetailController : ControllerBase
     {
         private readonly IBillDetailServices _billDetailServices;
-        public BillDetailController(IBillDetailServices billDetailServices)
+        private readonly IProductDetailServices _productDetailServices;
+        public BillDetailController(IBillDetailServices billDetailServices, IProductDetailServices productDetailServices)
         {
             _billDetailServices = billDetailServices;
+
+            _productDetailServices = productDetailServices;
+
         }
         [HttpGet]
         public async Task<ActionResult> GetAllBillDetails()
@@ -23,18 +27,28 @@ namespace LaptopShop_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateBillDetail(BillDetail obj)
         {
-            if (obj != null)
+            var listBillDetail = await _billDetailServices.GetAllBillDetails();
+            var th = listBillDetail.FirstOrDefault(x => x.IdBill == obj.IdBill && x.IdProductDetails == obj.IdProductDetails);
+            var productDetailx = _productDetailServices.GetProductDetailById(obj.IdProductDetails);
+            if (productDetailx.Result.AvailableQuantity <= 0 || productDetailx.Result.AvailableQuantity < obj.Quantity)
             {
-                if (await _billDetailServices.CreateBillDetail(obj))
-                {
-                    return Ok("Bạn thêm thành công");
-                }
-                return BadRequest("Không thành công !");
+                return BadRequest("Số lượng sản phẩm không đủ");
             }
-            else
+            if (th != null)
             {
-                return BadRequest("Không tồn tại");
+                BillDetail oo = new BillDetail();
+                oo.Id = th.Id;
+                // oo.Price = obj.Price;
+                oo.Quantity = (th.Quantity + obj.Quantity);
+                await _billDetailServices.UpdateBillDetail(oo);
+                return Ok("Sản phẩm đã tồn tại. Số lượng vừa được cập nhât");
             }
+            else if (await _billDetailServices.CreateBillDetail(obj))
+            {
+                return Ok("Bạn thêm thành công");
+            }
+            return BadRequest("Không thành công !");
+
         }
         [HttpPut]
         public async Task<ActionResult> UpdateBillDetail(BillDetail obj)

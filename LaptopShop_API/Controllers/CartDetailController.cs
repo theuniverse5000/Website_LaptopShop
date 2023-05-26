@@ -9,32 +9,45 @@ namespace LaptopShop_API.Controllers
     public class CartDetailController : ControllerBase
     {
         private readonly ICartDetailServices _cartDetailServices;
-        public CartDetailController(ICartDetailServices cartDetailServices)
+        private readonly IProductDetailServices _productDetailServices;
+
+        public CartDetailController(ICartDetailServices cartDetailServices, IProductDetailServices productDetailServices)
         {
             _cartDetailServices = cartDetailServices;
+            _productDetailServices = productDetailServices;
         }
         [HttpGet]
         public async Task<ActionResult> GetAllCartDetails()
         {
-            var listCartDetail = await _cartDetailServices.GetAllCartDetails();
+            var listCartDetail = await _cartDetailServices.GetCartDetailJoinProductDetail();
             return Ok(listCartDetail);
 
         }
         [HttpPost]
         public async Task<ActionResult> CreateCartDetail(CartDetail obj)
         {
-            if (obj != null)
+            var listCartDetail = await _cartDetailServices.GetAllCartDetails();
+            var th = listCartDetail.FirstOrDefault(x => x.UserId == obj.UserId && x.IdProductDetails == obj.IdProductDetails);
+            var productDetailx = _productDetailServices.GetProductDetailById(obj.IdProductDetails);
+            if (productDetailx.Result.AvailableQuantity <= 0 || productDetailx.Result.AvailableQuantity < obj.Quantity)
             {
-                if (await _cartDetailServices.CreateCartDetail(obj))
-                {
-                    return Ok("Bạn thêm thành công");
-                }
-                return BadRequest("Không thành công !");
+                return BadRequest("Số lượng sản phẩm không đủ");
             }
-            else
+            if (th != null)
             {
-                return BadRequest("Không tồn tại");
+                CartDetail oo = new CartDetail();
+                oo.Id = th.Id;
+                oo.Quantity = (th.Quantity + obj.Quantity);
+                await _cartDetailServices.UpdateCartDetail(oo);
+                return Ok("Sản phẩm đã tồn tại. Số lượng vừa được cập nhât");
             }
+
+            if (await _cartDetailServices.CreateCartDetail(obj))
+            {
+                return Ok("Bạn thêm thành công");
+            }
+            return BadRequest("Không thành công !");
+
         }
         [HttpPut("id")]
         public async Task<ActionResult> UpdateCartDetail(CartDetail obj)
