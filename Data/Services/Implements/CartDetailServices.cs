@@ -125,8 +125,8 @@ namespace Data.Services.Implements
                     _dbContext.CartDetails.Update(x);
                     await _dbContext.SaveChangesAsync();
                     return true;
-                }
 
+                }
             }
             catch (Exception)
             {

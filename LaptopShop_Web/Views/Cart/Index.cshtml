@@ -2,11 +2,16 @@
 @using System.Globalization;
 @using Data.Models.ViewModels;
 @{
-    //var ThongBaoCong = TempData["ThongBaoCong"] as string;
-    //var ThongBaoTru = TempData["ThongBaoTru"] as string;
-    //var ThongBaoDelete = TempData["ThongBaoDelete"] as string;
+    var ThongBaoHanhDong = TempData["ThongBaoHanhDong"] as string;
     decimal TongTien = 0;
-    
+
+}
+@if (ThongBaoHanhDong != null)
+{
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Thông báo :</strong>@ThongBaoHanhDong <a href="#" class="alert-link"></a>.
+    </div>
 }
 <table class="table table-hover">
     <thead>

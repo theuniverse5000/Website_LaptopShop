@@ -16,10 +16,19 @@ namespace LaptopShop_API.Controllers
             _cartDetailServices = cartDetailServices;
             _productDetailServices = productDetailServices;
         }
+
         [HttpGet]
         public async Task<ActionResult> GetAllCartDetails()
         {
             var listCartDetail = await _cartDetailServices.GetCartDetailJoinProductDetail();
+            return Ok(listCartDetail);
+
+        }
+        [Route("GetCartDetailNoJoin")]
+        [HttpGet]
+        public async Task<ActionResult> GetAllCartDetailNoJoin()
+        {
+            var listCartDetail = await _cartDetailServices.GetAllCartDetails();
             return Ok(listCartDetail);
 
         }
@@ -49,21 +58,20 @@ namespace LaptopShop_API.Controllers
             return BadRequest("Không thành công !");
 
         }
-        [HttpPut("id")]
+
+        [Route("UpdateQuantity")]
+        [HttpPut]
         public async Task<ActionResult> UpdateCartDetail(CartDetail obj)
         {
-            if (obj != null)
+            if (await _cartDetailServices.UpdateCartDetail(obj))
             {
-                if (await _cartDetailServices.UpdateCartDetail(obj))
-                {
-                    return Ok("Thành công");
-                }
-                return BadRequest("Không thành công !");
+                return Ok("Thành công");
             }
             else
             {
-                return BadRequest("Không tồn tại");
+                return BadRequest("Không thành công !");
             }
+
         }
         [HttpDelete("id")]
         public async Task<ActionResult> DeleteCartDetail(Guid id)

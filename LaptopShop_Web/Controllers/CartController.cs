@@ -56,5 +56,97 @@ namespace LaptopShop_Web.Controllers
             ModelState.AddModelError(string.Empty, "Thêm thất bại !!!");
             return View();
         }
+        public async Task<IActionResult> CongOneQuantity(Guid id)
+        {
+            //  Guid getUserId = Guid.Parse("F9605C6D-FBA8-4220-BFAA-F2C629008745");
+            var listCartDetail = await callAPI.GetAll<CartDetail>($"https://localhost:44308/api/CartDetail/GetCartDetailNoJoin");
+            //   var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
+            var x = listCartDetail.FirstOrDefault(x => x.Id == id);
+            x.Quantity += 1;
+            using (var client = new HttpClient())
+            {
+                //
+                client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail/UpdateQuantity");
+
+                //HTTP POST
+                var putTask = client.PutAsJsonAsync<CartDetail>(client.BaseAddress, x);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    TempData["ThongBaoHanhDong"] = "Số lượng sản phẩm vừa tăng";
+                    return RedirectToAction("Index", "Cart");
+                }
+            }
+            return RedirectToAction("Index", "Cart");
+        }
+        public async Task<IActionResult> TruOneQuantity(Guid id)
+        {
+            //  Guid getUserId = Guid.Parse("F9605C6D-FBA8-4220-BFAA-F2C629008745");
+            var listCartDetail = await callAPI.GetAll<CartDetail>($"https://localhost:44308/api/CartDetail/GetCartDetailNoJoin");
+            //   var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
+            var x = listCartDetail.FirstOrDefault(x => x.Id == id);
+            if (x.Quantity <= 1)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri($"https://localhost:44308/api/CartDetail/id?Id={id}");
+
+                    //HTTP DELETE
+                    var deleteTask = client.DeleteAsync(client.BaseAddress);
+                    deleteTask.Wait();
+
+                    var result = deleteTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        TempData["ThongBaoHanhDong"] = "Bạn vừa xóa sản phẩm khỏi giỏ hàng";
+                        return RedirectToAction("Index", "Cart");
+                    }
+                }
+            }
+            else
+            {
+                x.Quantity -= 1;
+                using (var client = new HttpClient())
+                {
+                    //
+                    client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail/UpdateQuantity");
+
+                    //HTTP POST
+                    var putTask = client.PutAsJsonAsync<CartDetail>(client.BaseAddress, x);
+                    putTask.Wait();
+
+                    var result = putTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+
+                        TempData["ThongBaoHanhDong"] = "Số lượng sản phẩm vừa giảm";
+                        return RedirectToAction("Index", "Cart");
+                    }
+                }
+            }
+            return RedirectToAction("Index", "Cart");
+        }
+        public async Task<IActionResult> DeleteItemInCart(Guid id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"https://localhost:44308/api/CartDetail/id?Id={id}");
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync(client.BaseAddress);
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    TempData["ThongBaoHanhDong"] = "Bạn vừa xóa sản phẩm khỏi giỏ hàng";
+                    return RedirectToAction("Index", "Cart");
+                }
+            }
+            return RedirectToAction("Index", "Cart");
+        }
     }
 }

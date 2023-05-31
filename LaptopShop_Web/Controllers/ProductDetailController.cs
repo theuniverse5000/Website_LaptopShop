@@ -126,28 +126,28 @@ namespace LaptopShop_Web.Controllers
             return View();
         }
         [HttpGet]
-        public Task<IActionResult> Update(Guid id)
+        public async Task<IActionResult> Update(Guid id)
         {
-            ProductDetail productDetail = null;
+            //ProductDetail productDetail = null;
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri($"https://localhost:44308/api/ProductDetail/id?Id={id}");
-                //HTTP GET
-                var responseTask = client.GetAsync(client.BaseAddress);
-                responseTask.Wait();
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri($"https://localhost:44308/api/ProductDetail/id?Id={id}");
+            //    //HTTP GET
+            //    var responseTask = client.GetAsync(client.BaseAddress);
+            //    responseTask.Wait();
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<ProductDetail>();
-                    readTask.Wait();
+            //    var result = responseTask.Result;
+            //    if (result.IsSuccessStatusCode)
+            //    {
+            //        var readTask = result.Content.ReadAsAsync<ProductDetail>();
+            //        readTask.Wait();
 
-                    productDetail = readTask.Result;
-                }
-            }
-            return Task.FromResult<IActionResult>(View(productDetail));
-            //   return View();
+            //        productDetail = readTask.Result;
+            //    }
+            //}
+            //return Task.FromResult<IActionResult>(View(productDetail));
+            return View();
         }
         // [HttpPut]
         public Task<IActionResult> Update(ProductDetail productDetail)
