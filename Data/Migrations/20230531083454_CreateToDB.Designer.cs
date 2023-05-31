@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230516165017_CreateToDB")]
+    [Migration("20230531083454_CreateToDB")]
     partial class CreateToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -440,11 +440,20 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("DiaChi")
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("HoTen")
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<Guid>("IdRole")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
                         .HasColumnType("varchar(256)");
+
+                    b.Property<string>("SoDienThoai")
+                        .HasColumnType("varchar(15)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

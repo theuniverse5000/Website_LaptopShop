@@ -12,6 +12,9 @@ namespace Data.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Username).HasColumnType("varchar(256)");
             builder.Property(x => x.Password).HasColumnType("varchar(256)");
+            builder.Property(x => x.HoTen).HasColumnType("nvarchar(256)");
+            builder.Property(x => x.DiaChi).HasColumnType("nvarchar(256)");
+            builder.Property(x => x.SoDienThoai).HasColumnType("varchar(15)");
             builder.Property(x => x.Status).HasColumnType("int");
             builder.HasOne(p => p.Role).WithMany(p => p.Users).
                 HasForeignKey(p => p.IdRole);

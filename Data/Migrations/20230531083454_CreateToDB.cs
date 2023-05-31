@@ -164,6 +164,9 @@ namespace Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "varchar(256)", nullable: false),
                     Password = table.Column<string>(type: "varchar(256)", nullable: true),
+                    HoTen = table.Column<string>(type: "nvarchar(256)", nullable: true),
+                    DiaChi = table.Column<string>(type: "nvarchar(256)", nullable: true),
+                    SoDienThoai = table.Column<string>(type: "varchar(15)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     IdRole = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

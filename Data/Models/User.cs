@@ -1,20 +1,15 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace Data.Models
+﻿namespace Data.Models
 {
-    public class User 
+    public class User
     {
         // /^[a-zA-Z0-9]+$/
         public Guid Id { get; set; }
 
-       [MinLength(7,ErrorMessage ="User phải dài hơn 6 kí tự")]
-        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Chỉ được chứa kí tự chữ hoặc số")]
         public string Username { get; set; }
-
-        [MinLength(7, ErrorMessage = "Password phải dài hơn 6 kí tự")]
-        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Chỉ được chứa kí tự chữ hoặc số")]
         public string Password { get; set; }
+        public string HoTen { get; set; }
+        public string DiaChi { get; set; }
+        public string SoDienThoai { get; set; }
 
         public int Status { get; set; }
         public Guid IdRole { get; set; }

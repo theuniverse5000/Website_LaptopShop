@@ -438,11 +438,20 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("DiaChi")
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("HoTen")
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<Guid>("IdRole")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
                         .HasColumnType("varchar(256)");
+
+                    b.Property<string>("SoDienThoai")
+                        .HasColumnType("varchar(15)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
