@@ -1,0 +1,35 @@
+﻿@using Data.Models;
+@*@model IEnumerable<Data.Models.CardVGA>*@
+
+@{
+    ViewData["Title"] = "Quản lý Card";
+}
+
+<h1>Quản lý CardVGA</h1>
+<a asp-controller="CardVGA" asp-action="Create" class="btn btn-outline-primary">Thêm CardVGA</a>
+<div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Mã Card</th>
+            <th scope="col">Tên Card</th>
+            <th scope="col">Thông Số</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var x in (List<CardVGA>)ViewBag.listCardVGA)
+        {
+            <tr class="table-primary">
+                <th scope="row">@x.Ma</th>
+                <td>@x.Ten</td>
+                <td>@x.ThongSo</td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@x.Id" class="btn btn-outline-success">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@x.Id" class="btn btn-outline-success">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

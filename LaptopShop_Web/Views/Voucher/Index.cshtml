@@ -1,0 +1,39 @@
+﻿@using Data.Models;
+@model IEnumerable<Data.Models.Voucher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Quản lý Voucher</h1>
+
+<a asp-controller="Voucher" asp-action="Create" class="btn btn-outline-primary">Thêm Voucher</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Mã Voucher</th>
+            <th scope="col">Tên Voucher</th>
+            <th scope="col">Ngày bắt đầu</th>
+            <th scope="col">Ngày kết thúc</th>
+            <th scope="col">Giá trị</th>
+            <th scope="col">Số lượng</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var x in (List<Voucher>)ViewBag.listVoucher) {
+        <tr>
+            <th scope="row">@x.Ma</th>
+            <td>@x.Name</td>
+            <td>@x.StartDay</td>
+            <td>@x.EndDay</td>
+            <td>@x.GiaTri</td>
+            <td>@x.SoLuong</td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@x.ID" class="btn btn-outline-success">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@x.ID" class="btn btn-outline-success">Xóa</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

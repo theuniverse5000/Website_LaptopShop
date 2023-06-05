@@ -1,0 +1,31 @@
+﻿@model Data.Models.Manufacturer
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Manufacturer</h4>
+<hr />
+<form class="row g-3 was-validated" asp-action="Create" method="post">
+    
+    <div class="form-floating col-md-6">
+        <input asp-for="Name" type="text" class="form-control" placeholder="Name" required>
+        <label for="">Tên Nhà Sản Xuất</label>
+    </div>
+   
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
