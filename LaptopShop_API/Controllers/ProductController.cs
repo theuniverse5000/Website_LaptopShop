@@ -35,10 +35,10 @@ namespace LaptopShop_API.Controllers
             else return NotFound("Thêm thất bại");
         }
 
-        [HttpPut("id")]
-        public async Task<ActionResult> UpdateProduct(Product obj, Guid id) 
+        [HttpPut]
+        public async Task<ActionResult> UpdateProduct(Product obj) 
         {
-            if (await _productServices.UpdateProduct(obj, id))
+            if (await _productServices.UpdateProduct(obj, obj.Id))
             {
                 return Ok("Sửa thành công");
             }
@@ -61,7 +61,7 @@ namespace LaptopShop_API.Controllers
                 return NotFound("Không tìm thấy");
             }
             else return Ok(await _productServices.GetProductById(id));
-        }
+        }   
         
     }
 }

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Data.Models.Ram>
+
+@{
+    ViewData["Title"] = "ShowAll";
+}
+
+<h1>Quản lí RAM</h1>
+
+<p>
+    <a asp-action="Create">Thêm RAM</a>
+</p>
+<table class="table table-hover">
+    @*<thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThongSo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoKheCam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>*@
+    <thead>
+        <tr>
+            <th scope="col">Mã Ram</th>
+            <th scope="col">Thông Số</th>
+            <th scope="col">Số Khe Cắm</th>
+            <th scope="col">Mô Tả</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThongSo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoKheCam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>*@
+            <th scope="row">@item.Ma</th>
+                <td>@item.ThongSo</td>
+                <td>@item.SoKheCam</td>
+                <td>@item.MoTa</td>
+            <td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success">Sửa</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-warning">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

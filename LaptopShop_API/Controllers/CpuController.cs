@@ -34,10 +34,10 @@ namespace LaptopShop_API.Controllers
             }
             else return NotFound("Thêm thất bại");
         }
-        [HttpPut("id")]
-        public async Task<ActionResult> UpdateCpu(Cpu obj, Guid id)
+        [HttpPut]
+        public async Task<ActionResult> UpdateCpu(Cpu obj)
         {
-            if (await _cpuServices.UpdateCpu(obj, id))
+            if (await _cpuServices.UpdateCpu(obj, obj.Id))
             {
                 return Ok("Sửa thành công");
             }
