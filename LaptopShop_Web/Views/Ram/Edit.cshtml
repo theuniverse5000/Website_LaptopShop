@@ -1,0 +1,79 @@
+﻿@model Data.Models.Ram
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Sửa RAM</h1>
+
+<h4>Ram</h4>
+<hr />
+@*<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ma" class="control-label"></label>
+                <input asp-for="Ma" class="form-control" />
+                <span asp-validation-for="Ma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThongSo" class="control-label"></label>
+                <input asp-for="ThongSo" class="form-control" />
+                <span asp-validation-for="ThongSo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoKheCam" class="control-label"></label>
+                <input asp-for="SoKheCam" class="form-control" />
+                <span asp-validation-for="SoKheCam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTa" class="control-label"></label>
+                <input asp-for="MoTa" class="form-control" />
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+*@
+<form class="row g-3 was-validated" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating col-md-6">
+        <input asp-for="Ma" type="text" class="form-control" placeholder="Ma" required>
+        <label for="">Ma</label>
+        <span asp-validation-for="Ma" class="text-danger"></span>
+    </div>
+    <div class="form-floating col-md-6">
+        <input asp-for="ThongSo" type="text" class="form-control" placeholder="ThongSo" required>
+        <label for="">Thông Số</label>
+        <span asp-validation-for="ThongSo" class="text-danger"></span>
+    </div>
+    <div class="form-floating col-md-6">
+        <input asp-for="SoKheCam" type="text" class="form-control" placeholder="SoKheCam" required>
+        <label for="">Số Khe Cắm</label>
+        <span asp-validation-for="ThongSo" class="text-danger"></span>
+    </div>
+    <div class="form-floating col-md-6">
+        <input asp-for="MoTa" type="text" class="form-control" placeholder="MoTa" required>
+        <label for="">Mô Tả</label>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
+    </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

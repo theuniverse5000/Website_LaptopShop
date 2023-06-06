@@ -31,7 +31,7 @@ namespace LaptopShop_API.Controllers
 
        
         // POST api/<ScreenController>
-        [HttpPost]
+        [HttpPost("add-screen")]
         public async Task<ActionResult> Create(Screen screen)
         {
             var listScreen = await _ScreenSV.GetAllScreen();
@@ -46,7 +46,8 @@ namespace LaptopShop_API.Controllers
         }
 
         // PUT api/<ScreenController>/5
-        [HttpPut("{id}")]
+        [HttpPut("update-screen")]
+        //[Route("edit-screen")]
         public async Task<ActionResult> Edit(Screen screen, Guid id)
         {
             if (await _ScreenSV.Update(screen, id))
@@ -58,6 +59,7 @@ namespace LaptopShop_API.Controllers
 
         // DELETE api/<ScreenController>/5
         [HttpDelete("{id}")]
+        
         public async Task<ActionResult> Delete(Guid id)
         {
             if (await _ScreenSV.Delete(id))

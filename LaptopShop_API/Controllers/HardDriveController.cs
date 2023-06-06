@@ -31,7 +31,7 @@ namespace LaptopShop_API.Controllers
 
 
         // POST api/<HardDriveController>
-        [HttpPost]
+        [HttpPost("add-harddrive")]
         public async Task<ActionResult> CreateHD(HardDrive hardDrive)
         {
             var listHD = await HDservices.GetAllHardDrive();
@@ -46,7 +46,7 @@ namespace LaptopShop_API.Controllers
         }
 
         // PUT api/<HardDriveController>/5
-        [HttpPut("{id}")]
+        [HttpPut("update-harddrive")]
         public async Task<ActionResult> Edit(HardDrive hardDrive, Guid id)
         {
             if (await HDservices.Update(hardDrive, id))

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Data.Models.HardDrive>
+
+@{
+    ViewData["Title"] = "GetHDs";
+}
+
+<h1>GetAlls</h1>
+
+<p>
+    <a asp-action="AddHD">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThongSo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThongSo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoTa)
+            </td>
+            <td>
+                <a asp-action="Edits" asp-route-id="@item.Id">Edit</a> |
+@*                <a asp-action="Details" asp-route-id="@item.Ma">Details</a> |
+*@                <a asp-action="Deletes" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

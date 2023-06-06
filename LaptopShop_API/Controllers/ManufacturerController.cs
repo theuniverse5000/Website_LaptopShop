@@ -34,10 +34,10 @@ namespace LaptopShop_API.Controllers
             }
             else return NotFound("Thêm thất bại");
         }
-        [HttpPut("id")]
-        public async Task<ActionResult> UpdateManufacturer(Manufacturer mf, Guid id) 
+        [HttpPut]
+        public async Task<ActionResult> UpdateManufacturer(Manufacturer mf) 
         {
-            if (await _manufacturerServices.UpdateManufacturer(mf, id))
+            if (await _manufacturerServices.UpdateManufacturer(mf, mf.Id))
             {
                 return Ok("Sửa thành công");
             }

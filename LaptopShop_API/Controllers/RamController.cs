@@ -34,10 +34,10 @@ namespace LaptopShop_API.Controllers
             }
             else return NotFound("Thêm thất bại");
         }
-        [HttpPut("id")]
-        public async Task<ActionResult> UpdateRam(Ram ram, Guid id)
+        [HttpPut]
+        public async Task<ActionResult> UpdateRam(Ram ram)
         {
-            if (await _ramServices.UpdateRam(ram, id))
+            if (await _ramServices.UpdateRam(ram, ram.Id))
             {
                 return Ok("Sửa thành công");
             }

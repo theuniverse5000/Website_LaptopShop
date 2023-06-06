@@ -1,7 +1,7 @@
 ﻿using Data.Models;
 using LaptopShop_Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Newtonsoft.Json;
 
 namespace LaptopShop_Web.Controllers
 {
@@ -72,11 +72,17 @@ namespace LaptopShop_Web.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> Update() 
+        public async Task<IActionResult> Update(Guid id) 
         {
-            return View();
+            var client = new HttpClient();
+            string aipURL = $"https://localhost:7158/api/Voucher{id}";
+
+            var response = await client.GetAsync(aipURL);
+            string apiData = await response.Content.ReadAsStringAsync();    
+            var result = JsonConvert.DeserializeObject<Voucher>(apiData);
+            return View(result);
         }
-        public Task<IActionResult> Update(Voucher _voucher) 
+        public async Task<IActionResult> Update(Voucher _voucher) 
         {
             using(var client = new HttpClient())
             {
@@ -88,16 +94,16 @@ namespace LaptopShop_Web.Controllers
                 var result = putTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return Task.FromResult<IActionResult>(View(_voucher));
+                    return RedirectToAction("Index");
                 }
-                return Task.FromResult<IActionResult>(View(_voucher));
+                return View();
             }
         }
         public Task<IActionResult> Delete(Guid id)
         {
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/CardVGA/id?Id={id}");
+                client.BaseAddress = new Uri($"https://localhost:7158/api/Voucher/id?Id={id}");
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
                 deleteTask.Wait();
 

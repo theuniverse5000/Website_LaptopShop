@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using LaptopShop_Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace LaptopShop_Web.Controllers
 {
@@ -67,9 +68,15 @@ namespace LaptopShop_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            return View();
+           var client = new HttpClient();
+            string apiURL = $"https://localhost:7158/api/Manufacturer{id}";
+
+            var response = await client.GetAsync(apiURL);
+            string apiData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<Manufacturer>(apiData);
+            return View(result);
         }
-        public Task<IActionResult> Update(Manufacturer _manufacturer)
+        public async Task<IActionResult> Update(Manufacturer _manufacturer)
         {
             using(var client = new HttpClient())
             {
@@ -80,9 +87,9 @@ namespace LaptopShop_Web.Controllers
                 var result = putTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return Task.FromResult<IActionResult>(View(_manufacturer));
+                    return RedirectToAction("Index");
                 }
-                return Task.FromResult<IActionResult>(View(_manufacturer));
+                return View();
             }
         }
         public Task<IActionResult> Delete(Guid id)
