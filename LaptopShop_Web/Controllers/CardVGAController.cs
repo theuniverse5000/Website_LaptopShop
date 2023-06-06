@@ -1,6 +1,9 @@
 ﻿using Data.Models;
 using LaptopShop_Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+using System.Transactions;
 
 namespace LaptopShop_Web.Controllers
 {
@@ -72,26 +75,33 @@ namespace LaptopShop_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            return View();
+            var client = new HttpClient();
+            string apiURL = $"https://localhost:7158/api/CardVGA{id}";
+
+            var response = await client.GetAsync(apiURL);
+            string apiData = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<CardVGA>(apiData);
+            return View(result);
         }
-
-        public Task<IActionResult> Update(CardVGA _cardVGA)
+        
+        public async Task<IActionResult> Update(CardVGA _cardVGA) 
         {
-            using (var client = new HttpClient())
+            using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/CardVGA/");
+                client.BaseAddress = new Uri("https://localhost:7158/api/CardVGA");
 
-                var putTask = client.PutAsJsonAsync<CardVGA>("CardVGA", _cardVGA);
+                var putTask = client.PutAsJsonAsync(client.BaseAddress, _cardVGA);
                 putTask.Wait();
 
                 var result = putTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return Task.FromResult<IActionResult>(View(_cardVGA));
+                    return RedirectToAction("Index");
                 }
-                return Task.FromResult<IActionResult>(View(_cardVGA));
             }
+            return View();
         }
+
         public Task<IActionResult> Delete(Guid id)
         {
             using(var client = new HttpClient())
