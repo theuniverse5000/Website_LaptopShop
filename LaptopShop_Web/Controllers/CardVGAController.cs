@@ -7,10 +7,10 @@ namespace LaptopShop_Web.Controllers
     public class CardVGAController : Controller
     {
         CallAPIServices _callAPI = new CallAPIServices();
-        
+
         public CardVGAController()
         {
-                
+
         }
         public Task<IActionResult> Index()
         {
@@ -52,13 +52,13 @@ namespace LaptopShop_Web.Controllers
             _cardVGA.Ten = _cardVGAView.Ten;
             _cardVGA.ThongSo = _cardVGAView.ThongSo;
 
-            using(var client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7158/api/CardVGA");
 
                 var postTask = client.PostAsJsonAsync<CardVGA>("CardVGA", _cardVGA);
                 postTask.Wait();
-                
+
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
@@ -67,7 +67,7 @@ namespace LaptopShop_Web.Controllers
             }
             ModelState.AddModelError(string.Empty, "Thêm Thất Bại!");
             return View();
-            
+
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
@@ -94,7 +94,7 @@ namespace LaptopShop_Web.Controllers
         }
         public Task<IActionResult> Delete(Guid id)
         {
-            using(var client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri($"https://localhost:7158/api/CardVGA/id?Id={id}");
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
