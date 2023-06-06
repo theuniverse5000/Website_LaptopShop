@@ -37,10 +37,10 @@ namespace LaptopShop_API.Controllers
                 return NotFound("Thêm Thất Bại");
             }
         }
-        [HttpPut ("id")]
-        public async Task<ActionResult> UpdateCardVGA(CardVGA cardVGA, Guid id)
+        [HttpPut]
+        public async Task<ActionResult> UpdateCardVGA(CardVGA cardVGA)
         {
-            if (await _cardServices.UpdateCardVGA(cardVGA, id))
+            if (await _cardServices.UpdateCardVGA(cardVGA, cardVGA.Id))
             {
                 return Ok("Sửa thành công");
             }

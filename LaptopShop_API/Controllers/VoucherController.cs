@@ -37,10 +37,10 @@ namespace LaptopShop_API.Controllers
                 return NotFound("Thêm thất bại");
             }
         }
-        [HttpPut("id")]
-        public async Task<ActionResult> UpdateVoucher(Voucher vc, Guid id)
+        [HttpPut]
+        public async Task<ActionResult> UpdateVoucher(Voucher vc)
         {
-            if (await _voucherServices.UpdateVoucher(vc, id))
+            if (await _voucherServices.UpdateVoucher(vc, vc.ID))
             {
                 return Ok("Sửa thành công");
             }
