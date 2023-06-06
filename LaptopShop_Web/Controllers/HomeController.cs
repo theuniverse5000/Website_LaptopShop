@@ -16,7 +16,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Index()
         {
             var httpClient = new HttpClient(); // tạo 1 http client để call api
-            var reponseProductDetail = await httpClient.GetAsync("https://localhost:44308/api/ProductDetail");
+            var reponseProductDetail = await httpClient.GetAsync("https://localhost:7158/api/ProductDetail");
             string apiDataProductDetail = await reponseProductDetail.Content.ReadAsStringAsync();
             ViewBag.listProductDetailIndex = JsonConvert.DeserializeObject<List<ProductDetailView>>(apiDataProductDetail);
             var listProductDetail = JsonConvert.DeserializeObject<List<ProductDetailView>>(apiDataProductDetail);
@@ -25,7 +25,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> ShowChiTietSanPham(Guid id)
         {
             var httpClient = new HttpClient(); // tạo 1 http client để call api
-            var reponseProductDetail = await httpClient.GetAsync($"https://localhost:44308/api/ProductDetail/id?id={id}");
+            var reponseProductDetail = await httpClient.GetAsync($"https://localhost:7158/api/ProductDetail/id?id={id}");
             string apiDataProductDetail = await reponseProductDetail.Content.ReadAsStringAsync();
             //   ViewBag.ProductDetailIndex = JsonConvert.DeserializeObject<ProductDetailView>(apiDataProductDetail);
             var ProductDetail = JsonConvert.DeserializeObject<ProductDetailView>(apiDataProductDetail);

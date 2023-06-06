@@ -50,7 +50,7 @@ namespace LaptopShop_Web.Controllers
                 return Task.FromResult<IActionResult>(View(productDetails));
             }
 
-            //  return View(await callAPI.GetAll<ProductDetailView>("https://localhost:44308/api/ProductDetail"));
+            //  return View(await callAPI.GetAll<ProductDetailView>("https://localhost:7158/api/ProductDetail"));
         }
         public async Task<IActionResult> Create()
         {

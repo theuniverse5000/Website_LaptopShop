@@ -22,7 +22,7 @@ namespace LaptopShop_API.Controllers
             return Ok(listUser);
 
         }
-        [HttpPost]
+        [HttpPost("add-use")]
         public async Task<ActionResult> CreateUser(User u)
         {
             var lstUser = await userServices.GetAllUser();
@@ -46,7 +46,7 @@ namespace LaptopShop_API.Controllers
                 return BadRequest("Không tồn tại");
             }
         }
-        [HttpPut("{id}")]
+        [HttpPut("update-use")]
         public async Task<ActionResult> UpdateUser(User u,Guid id)
         {
             if (u != null)
