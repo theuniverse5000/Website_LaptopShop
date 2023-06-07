@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Data.Models;
 using Data.Services.Implements;
 using System.Drawing;
+using Image = Data.Models.Image;
 
 namespace LaptopShop_API.Controllers
 {
@@ -25,41 +26,41 @@ namespace LaptopShop_API.Controllers
             return Ok(await _imageServices.GetAllImageAsync());
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> Create(Image image)
-        //{
-        //    if (await _imageServices.CheckMa(image.Ma))
-        //    {
-        //        return BadRequest("ma da ton tai");
-        //    }
-        //    else
-        //    if (image != null)
-        //    {
-        //        if (await _imageServices.AddAsync(image))
-        //        {
-        //            return Ok("thanh cong");
-        //        }
-        //        else return NotFound("that bai");
-        //    }
-        //    else
-        //    {
-        //        return BadRequest("ko ton tai");
-        //    }
-        //}
+        [HttpPost]
+        public async Task<ActionResult> Create(Image image)
+        {
+            if (await _imageServices.CheckMa(image.Ma))
+            {
+                return BadRequest("ma da ton tai");
+            }
+            else
+            if (image != null)
+            {
+                if (await _imageServices.AddAsync(image))
+                {
+                    return Ok("thanh cong");
+                }
+                else return NotFound("that bai");
+            }
+            else
+            {
+                return BadRequest("ko ton tai");
+            }
+        }
 
-        //[HttpPut("id")]
-        //public async Task<ActionResult> Update(Image image, Guid id)
-        //{
-        //    if (image != null)
-        //    {
-        //        if (await _imageServices.UpdateAsync(image, id))
-        //        {
-        //            return Ok("thanh cong");
-        //        }
-        //        else return NotFound("that bai");
-        //    }
-        //    else return BadRequest("ko ton tai");
-        //}
+        [HttpPut]
+        public async Task<ActionResult> Update(Image image)
+        {
+            if (image != null)
+            {
+                if (await _imageServices.UpdateAsync(image, image.Id))
+                {
+                    return Ok("thanh cong");
+                }
+                else return NotFound("that bai");
+            }
+            else return BadRequest("ko ton tai");
+        }
 
         [HttpDelete("id")]
         public async Task<ActionResult> Delete(Guid id)

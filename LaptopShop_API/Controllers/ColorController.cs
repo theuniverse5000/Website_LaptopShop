@@ -44,12 +44,12 @@ namespace LaptopShop_API.Controllers
         }
 
 
-        [HttpPut("id")]
-        public async Task<ActionResult> Edit(Color color, Guid id)
+        [HttpPut]
+        public async Task<ActionResult> Edit(Color color)
         {
             if (color != null)
             {
-                if (await _colorService.Update(color, id))
+                if (await _colorService.Update(color, color.Id))
                 {
                     return Ok("thanh cong");
                 }

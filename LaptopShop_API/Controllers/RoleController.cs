@@ -50,12 +50,12 @@ namespace LaptopShop_API.Controllers
             else return BadRequest("khong ton tai");
         }
 
-        [HttpPut("id")]
-        public async Task<ActionResult> Update(Role role, Guid id)
+        [HttpPut]
+        public async Task<ActionResult> Update(Role role)
         {
             if (role != null)
             {
-                if (await _roleServices.Update(role, id))
+                if (await _roleServices.Update(role, role.Id))
                 {
                     return Ok("thanh cong");
                 }
