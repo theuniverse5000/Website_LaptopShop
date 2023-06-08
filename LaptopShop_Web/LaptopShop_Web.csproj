@@ -20,4 +20,8 @@
     <ProjectReference Include="..\LaptopShop_API\LaptopShop_API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\UploadImages\" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,5 @@
 ﻿using Data.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Data.Models;
-using Data.Services.Implements;
-using System.Drawing;
 using Image = Data.Models.Image;
 
 namespace LaptopShop_API.Controllers
@@ -27,7 +23,7 @@ namespace LaptopShop_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Image image)
+        public async Task<ActionResult> CreateImage(Image image)
         {
             if (await _imageServices.CheckMa(image.Ma))
             {
@@ -49,11 +45,11 @@ namespace LaptopShop_API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(Image image)
+        public async Task<ActionResult> UpdateImage(Image image)
         {
             if (image != null)
             {
-                if (await _imageServices.UpdateAsync(image, image.Id))
+                if (await _imageServices.UpdateAsync(image))
                 {
                     return Ok("thanh cong");
                 }
@@ -63,21 +59,23 @@ namespace LaptopShop_API.Controllers
         }
 
         [HttpDelete("id")]
-        public async Task<ActionResult> Delete(Guid id)
+        public async Task<ActionResult> DeleteImage(Guid id)
         {
-            if(await _imageServices.DeleteAsync(id))
+            if (await _imageServices.DeleteAsync(id))
             {
                 return Ok("thanh cong");
-            }return NotFound("that bai");
+            }
+            return NotFound("that bai");
         }
 
         [HttpGet("id")]
-        public async Task<ActionResult> GetById(Guid id)
+        public async Task<ActionResult> GetImageById(Guid id)
         {
-            if(await _imageServices.GetByIdAsync(id)==null)
+            if (await _imageServices.GetByIdAsync(id) == null)
             {
                 return NotFound("khong ton tai");
-            }else return Ok(await _imageServices.GetByIdAsync(id));
+            }
+            else return Ok(await _imageServices.GetByIdAsync(id));
         }
     }
 }

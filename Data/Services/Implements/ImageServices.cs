@@ -1,11 +1,6 @@
 ﻿using Data.Models;
 using Data.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Data.Services.Implements
@@ -77,14 +72,14 @@ namespace Data.Services.Implements
             return await context.Images.FirstOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<bool> UpdateAsync(Image image, Guid id)
+        public async Task<bool> UpdateAsync(Image image)
         {
             try
             {
                 var listObj = await context.Images.ToListAsync();
-                var temp = listObj.FirstOrDefault(v => v.Id == id);
+                var temp = listObj.FirstOrDefault(v => v.Id == image.Id);
                 temp.LinkImage = image.LinkImage;
-                temp.IdProductDetail= image.IdProductDetail;    
+                temp.IdProductDetail = image.IdProductDetail;
                 context.Remove(temp);
                 await Task.FromResult<Image>(context.Images.Update(temp).Entity);
                 await context.SaveChangesAsync();
