@@ -1,6 +1,15 @@
 ﻿@model IEnumerable<Data.Models.User>
-
+@using Data.Models
+@using Data.Services.Implements
+@using Data.Services.Interfaces
+@using Newtonsoft.Json
 @{
+     HttpClient _httpClient = new HttpClient();
+    string apiUrl = "https://localhost:7158/api/Role";
+    var response = await _httpClient.GetAsync(apiUrl);
+    string apidata = await response.Content.ReadAsStringAsync();
+    var roles = JsonConvert.DeserializeObject<List<Role>>(apidata);
+    ViewData["lstrole"] = new SelectList(roles, "Id", "Id");
     ViewData["Title"] = "GetAllUsers";
 }
 
@@ -58,7 +67,13 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role.Id)
+                @foreach (var role in ViewData["lstrole"] as SelectList)
+                    {
+                        if (role.Value == item.IdRole.ToString())
+                        {
+                            @role.Text;
+                        }
+                    }
             </td>
             <td>
                 <a asp-action="EditsUse" asp-route-id="@item.Id">Edit</a> |
@@ -69,3 +84,7 @@
 }
     </tbody>
 </table>
+
+
+
+
