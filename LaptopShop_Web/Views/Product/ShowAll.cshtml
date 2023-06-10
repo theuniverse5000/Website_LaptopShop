@@ -6,7 +6,7 @@
 
 @{
     HttpClient _httpClient = new HttpClient();
-    string apiUrl = "https://localhost:7158/api/Manufacturer";
+    string apiUrl = "https://localhost:44308/api/Manufacturer";
     var response = await _httpClient.GetAsync(apiUrl);
     string apidata = await response.Content.ReadAsStringAsync();
     var manufacturers = JsonConvert.DeserializeObject<List<Manufacturer>>(apidata);
@@ -14,10 +14,10 @@
     ViewData["Title"] = "ShowAll";
 }
 
-<h1>ShowAll</h1>
+<h1>Quản lí Product</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Product" asp-action="Create" class="btn btn-primary">Thêm Product</a>
 </p>
 <table class="table">
     <thead>

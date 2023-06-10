@@ -9,7 +9,7 @@
 }*@
 @{
     HttpClient _HttpClient = new HttpClient();
-    string apiurl = "https://localhost:7158/api/Manufacturer";
+    string apiurl = "https://localhost:44308/api/Manufacturer";
     var response = await _HttpClient.GetAsync(apiurl);
     string apidata = await response.Content.ReadAsStringAsync();
      var manufacturer = JsonConvert.DeserializeObject<List<Manufacturer>>(apidata);
