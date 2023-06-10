@@ -26,6 +26,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Giới thiệu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Khuyến mãi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Đăng nhập</a>
+                        </li>
                     </ul>
                     <form class="d-flex" asp-controller="ProductDetail" asp-action="ShowListProduct" role="search" method="get">
                         <input class="form-control me-2" type="search" placeholder="Nhập tên sản phẩm" aria-label="Search" name="nameProduct">
@@ -57,15 +69,14 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Bill" asp-action="ShowBill">Quản lý hóa đơn</a>
+                            <a class="nav-link active" asp-controller="Bill" asp-action="QuanLyBill">Hóa đơn</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Product" asp-action="Index">Product</a>
+                            <a class="nav-link active" asp-controller="Product" asp-action="Index">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" asp-controller="Manufacturer" asp-action="Index">
                                 Nhà sản xuất
-                                <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,41 +86,28 @@
                             <a class="nav-link active" asp-controller="Color" asp-action="Index">Màu sắc</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Ram" asp-action="Index">RAM</a>
+                            <a class="nav-link active" asp-controller="Ram" asp-action="Index">Ram</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Cpu" asp-action="Index">CPU</a>
+                            <a class="nav-link active" asp-controller="Cpu" asp-action="Index">Cpu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Ssd" asp-action="Index">SSD</a>
+                            <a class="nav-link active" asp-controller="HardDrive" asp-action="GetHDs">Ổ cứng</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" asp-controller="CardVGA" asp-action="Index">CardVGA</a>
+                        </li>       
+                         <li class="nav-item">
+                            <a class="nav-link active" asp-controller="Screen" asp-action="GetAllScreens">Màn hình</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" asp-controller="Voucher" asp-action="Index">Voucher</a>
                         </li>
-
-
-
-
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="User" asp-action="GetAllUsers">User</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Screen" asp-action="GetAllScreens">Screen</a>
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="HardDrive" asp-action="GetHDs">HardDrive</a>
+                            <a class="nav-link active" asp-controller="User" asp-action="GetAllUsers">Tài khoản</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Role" asp-action="Index">Role</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Color" asp-action="Index">Color</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Image" asp-action="Index">Image</a>
+                            <a class="nav-link active" asp-controller="Role" asp-action="Index">Chức vụ</a>
                         </li>
                 </div>
             </div>
@@ -123,6 +121,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
+
             &copy; 2023 - LaptopShop_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

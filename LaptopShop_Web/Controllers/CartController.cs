@@ -11,7 +11,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Index()
         {
 
-            Guid getUserId = Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97");
+            Guid getUserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
             //   ViewBag.GetCartForUser = _cartDetailServices.GetCartDetailJoinProductDetail().Where(a => a.UserId == getUserId);
             var listCartDetail = await callAPI.GetAll<CartDetailView>("https://localhost:44308/api/CartDetail");
             var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
@@ -22,13 +22,13 @@ namespace LaptopShop_Web.Controllers
         {
 
             var listCart = await callAPI.GetAll<Cart>("https://localhost:44308/api/Cart");
-            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97"));
+            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706"));
             if (cartNgan == null)
             {
                 using (var client = new HttpClient())
                 {
                     Cart t = new Cart();
-                    t.UserId = Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97");
+                    t.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
                     t.Description = "Chất lượng bình thường";
 
                     client.BaseAddress = new Uri("https://localhost:44308/api/Cart");
@@ -41,7 +41,7 @@ namespace LaptopShop_Web.Controllers
                 CartDetail x = new CartDetail();
                 x.Id = new Guid();
                 x.IdProductDetails = id;
-                x.UserId = Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97");
+                x.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
                 x.Quantity = 1;
                 client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail");
                 var postTask = client.PostAsJsonAsync<CartDetail>("CartDetail", x);
@@ -58,9 +58,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> CongOneQuantity(Guid id)
         {
-            //  Guid getUserId = Guid.Parse("F9605C6D-FBA8-4220-BFAA-F2C629008745");
             var listCartDetail = await callAPI.GetAll<CartDetail>($"https://localhost:44308/api/CartDetail/GetCartDetailNoJoin");
-            //   var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
             var x = listCartDetail.FirstOrDefault(x => x.Id == id);
             x.Quantity += 1;
             using (var client = new HttpClient())
@@ -84,9 +82,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> TruOneQuantity(Guid id)
         {
-            //  Guid getUserId = Guid.Parse("F9605C6D-FBA8-4220-BFAA-F2C629008745");
             var listCartDetail = await callAPI.GetAll<CartDetail>($"https://localhost:44308/api/CartDetail/GetCartDetailNoJoin");
-            //   var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
             var x = listCartDetail.FirstOrDefault(x => x.Id == id);
             if (x.Quantity <= 1)
             {

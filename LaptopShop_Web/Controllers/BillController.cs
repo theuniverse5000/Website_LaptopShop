@@ -16,9 +16,9 @@ namespace LaptopShop_Web.Controllers
             string apiDataUser = await reponseUser.Content.ReadAsStringAsync();
             string apiDataCartDetail = await reponseCartDetail.Content.ReadAsStringAsync();
             var listUser = JsonConvert.DeserializeObject<List<User>>(apiDataUser);
-            var thao = listUser.FirstOrDefault(x => x.Id == Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97"));
+            var thao = listUser.FirstOrDefault(x => x.Id == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706"));
             var listCartDetail = JsonConvert.DeserializeObject<List<CartDetailView>>(apiDataCartDetail);
-            var listItemInCart = listCartDetail.Where(x => x.UserId == Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97")).ToList();
+            var listItemInCart = listCartDetail.Where(x => x.UserId == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706")).ToList();
             Bill bill = new Bill();
             bill.Id = Guid.NewGuid();
             bill.Ma = "Bill_" + DateTime.Now.ToString();
@@ -27,12 +27,12 @@ namespace LaptopShop_Web.Controllers
             bill.HoTenKhachHang = thao.HoTen;
             bill.DiaChiKhachHang = thao.DiaChi;
             bill.Status = 0;
-            bill.UserId = Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97");
+            bill.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
             var reponseVoucher = await httpClient.GetAsync("https://localhost:44308/api/Voucher");
             string apiDataVoucher = await reponseVoucher.Content.ReadAsStringAsync();
             var listVoucher = JsonConvert.DeserializeObject<List<Voucher>>(apiDataVoucher);
             var voucherX = listVoucher.FirstOrDefault(x => x.Ma == maVoucher);
-            bill.VoucherId = voucherX.ID;
+            bill.VoucherId = voucherX != null ? voucherX.ID : Guid.Empty;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44308/api/Bill");
@@ -43,6 +43,7 @@ namespace LaptopShop_Web.Controllers
                 {
                     foreach (var item in listItemInCart)
                     {
+                        await client.DeleteAsync($"https://localhost:44308/api/CartDetail/id?Id={item.Id}");
                         BillDetail billDetail = new BillDetail();
                         billDetail.Id = Guid.NewGuid();
                         billDetail.IdBill = bill.Id;
@@ -63,12 +64,9 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> QuanLyBill()
         {
-            var httpClient = new HttpClient(); // tạo 1 http client để call api
-                                               //   var reponseCart = await httpClient.GetAsync("https://localhost:44308/api/Cart");
+            var httpClient = new HttpClient();
             var reponseBill = await httpClient.GetAsync("https://localhost:44308/api/Bill");
-            //    string apiDataCart = await reponseCart.Content.ReadAsStringAsync();
             string apiDataBill = await reponseBill.Content.ReadAsStringAsync();
-            //   var listCart = JsonConvert.DeserializeObject<List<Cart>>(apiDataCart);
             var listBill = JsonConvert.DeserializeObject<List<Bill>>(apiDataBill);
             ViewBag.listBill = listBill;
             return View(listBill);
