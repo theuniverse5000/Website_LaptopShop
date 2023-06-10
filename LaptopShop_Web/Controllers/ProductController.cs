@@ -20,8 +20,9 @@ namespace LaptopShop_Web.Controllers
 
             var response = await httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<Cpu>>(apiData);
+            var result = JsonConvert.DeserializeObject<List<Product>>(apiData);
             return View(result);
+<<<<<<< Updated upstream
             //IEnumerable<ProductView> product = null;
 
             //using (var client = new HttpClient())
@@ -48,6 +49,9 @@ namespace LaptopShop_Web.Controllers
             //        ModelState.AddModelError(string.Empty, "Có lỗi xảy ra");
             //    }
             //    return Task.FromResult<IActionResult>(View(product));
+=======
+            
+>>>>>>> Stashed changes
         
         }
         public async Task<IActionResult> Create()

@@ -1,7 +1,18 @@
-﻿@model Data.Models.Product
+﻿@using Data.Models;
+@using Newtonsoft.Json;
+@using Data.Services.Implements
+@using Data.Services.Interfaces
+@model Data.Models.Product
 
-@{
+@*@{
     ViewData["Title"] = "Create";
+}*@
+@{
+    HttpClient _HttpClient = new HttpClient();
+    string apiurl = "https://localhost:7158/api/Manufacturer";
+    var response = await _HttpClient.GetAsync(apiurl);
+    string apidata = await response.Content.ReadAsStringAsync();
+     var manufacturer = JsonConvert.DeserializeObject<List<Manufacturer>>(apidata);
 }
 
 <h1>Create</h1>
@@ -22,11 +33,16 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label asp-for="IDManufacturer" class="control-label"></label>
-                <input asp-for="IDManufacturer" class="form-control" />
+                <select asp-for="IDManufacturer" class="form-select">
+                    @foreach (var item in manufacturer)
+                    {
+                        <option value="@item.Id">@item.Id</option>
+                    }
+                </select>
                 <span asp-validation-for="IDManufacturer" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

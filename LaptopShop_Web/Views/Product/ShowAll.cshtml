@@ -1,6 +1,16 @@
-﻿@model IEnumerable<Data.Models.Product>
+﻿@using Data.Models;
+@using Newtonsoft.Json;
+@using Data.Services.Implements
+@using Data.Services.Interfaces
+@model IEnumerable<Data.Models.Product>
 
 @{
+    HttpClient _httpClient = new HttpClient();
+    string apiUrl = "https://localhost:7158/api/Manufacturer";
+    var response = await _httpClient.GetAsync(apiUrl);
+    string apidata = await response.Content.ReadAsStringAsync();
+    var manufacturers = JsonConvert.DeserializeObject<List<Manufacturer>>(apidata);
+    ViewData["lstmanufacturer"] = new SelectList(manufacturers, "Id", "Id");
     ViewData["Title"] = "ShowAll";
 }
 
@@ -18,9 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.IDManufacturer)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -33,9 +43,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IDManufacturer)
-            </td>*@
+            <td>
+                    @foreach (var manufacturer in ViewData["lstmanufacturer"] as SelectList)
+                    {
+                        if (manufacturer.Value == item.IDManufacturer.ToString())
+                        {
+                            @manufacturer.Text;
+                        }
+                    }
+            </td>
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
