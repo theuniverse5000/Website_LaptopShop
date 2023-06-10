@@ -14,7 +14,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> ShowAll()
         {
             var httpClient = new HttpClient();
-            string apiUrl = "https://localhost:7158/api/Ram";
+            string apiUrl = "https://localhost:44308/api/Ram";
             var response = await httpClient.GetAsync(apiUrl);
             string apiData = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<Ram>>(apiData);
@@ -30,7 +30,7 @@ namespace LaptopShop_Web.Controllers
             if(!ModelState.IsValid)
                 return View(ram);
             var httpClient = new HttpClient();
-            string apiUrl = "https://localhost:7158/api/Ram";
+            string apiUrl = "https://localhost:44308/api/Ram";
             var json = JsonConvert.SerializeObject(ram);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(apiUrl, content);
@@ -46,7 +46,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var httpClient = new HttpClient();
-            string apiUrl = $"https://localhost:7158/api/Ram{id}";
+            string apiUrl = $"https://localhost:44308/api/Ram{id}";
             var response = await httpClient.GetAsync(apiUrl);
             string apiData = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Ram>(apiData);
@@ -56,7 +56,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Ram");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Ram");
                 // http post
                 var putTask = client.PutAsJsonAsync(client.BaseAddress, ram);
                 putTask.Wait();
@@ -72,7 +72,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Delete(Guid id) 
         {
             var httpClient = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/Ram/id?Id={id}";
+            string apiURL = $"https://localhost:44308/api/Ram/id?Id={id}";
 
             var response = await httpClient.DeleteAsync(apiURL);
             if (response.IsSuccessStatusCode)

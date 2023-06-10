@@ -14,7 +14,7 @@ namespace LaptopShop_Web.Controllers
             IEnumerable<Role> _role = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Role");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Role");
                 var responseTask = client.GetAsync("Role");
                 responseTask.Wait();
 
@@ -51,7 +51,7 @@ namespace LaptopShop_Web.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Role");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Role");
                 var postTask = client.PostAsJsonAsync<Role>("Role", _role);
                 postTask.Wait();
 
@@ -78,7 +78,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/Role");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/Role");
 
                 var putTask = client.PutAsJsonAsync(client.BaseAddress, _role);
                 putTask.Wait();
@@ -95,7 +95,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/Role/id?Id={id}");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/Role/id?Id={id}");
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
                 deleteTask.Wait();
                 var result = deleteTask.Result;

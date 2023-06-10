@@ -17,7 +17,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> ShowAll()
         {
             var httpClient = new HttpClient();
-            string apiURL = "https://localhost:7158/api/Cpu";
+            string apiURL = "https://localhost:44308/api/Cpu";
 
             var response = await httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
@@ -36,7 +36,7 @@ namespace LaptopShop_Web.Controllers
 
             var httpClient = new HttpClient();
 
-            string apiURL = "https://localhost:7158/api/Cpu";
+            string apiURL = "https://localhost:44308/api/Cpu";
 
             var json = JsonConvert.SerializeObject(cpu);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -54,7 +54,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var httpClient = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/Cpu{id}";
+            string apiURL = $"https://localhost:44308/api/Cpu{id}";
 
             var response = await httpClient.GetAsync(apiURL);
 
@@ -67,7 +67,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Cpu");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Cpu");
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync(client.BaseAddress, cpu);
@@ -88,7 +88,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var httpClient = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/Cpu/id?Id={id}";
+            string apiURL = $"https://localhost:44308/api/Cpu/id?Id={id}";
 
             var response = await httpClient.DeleteAsync(apiURL);
             if (response.IsSuccessStatusCode)

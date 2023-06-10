@@ -18,7 +18,7 @@ namespace LaptopShop_Web.Controllers
             IEnumerable<Manufacturer> _manufacturer = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/");
+                client.BaseAddress = new Uri("https://localhost:44308/api/");
 
                 var responseTask = client.GetAsync("Manufacturer");
                 responseTask.Wait();
@@ -52,7 +52,7 @@ namespace LaptopShop_Web.Controllers
 
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Manufacturer");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Manufacturer");
 
                 var postTask = client.PostAsJsonAsync<Manufacturer>("Manufacturer", _mf);
                 postTask.Wait();
@@ -69,7 +69,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Update(Guid id)
         {
            var client = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/Manufacturer{id}";
+            string apiURL = $"https://localhost:44308/api/Manufacturer{id}";
 
             var response = await client.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
@@ -80,7 +80,7 @@ namespace LaptopShop_Web.Controllers
         {
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/Manufacturer");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/Manufacturer");
                 var putTask = client.PutAsJsonAsync<Manufacturer>("Manufacturer", _manufacturer);
                 putTask.Wait();
 
@@ -96,7 +96,7 @@ namespace LaptopShop_Web.Controllers
         {
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/Manufacturer/id?Id={id}");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/Manufacturer/id?Id={id}");
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
                 deleteTask.Wait();
 

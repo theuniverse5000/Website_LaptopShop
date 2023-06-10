@@ -16,7 +16,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> ShowAll()
         {
             var httpClient = new HttpClient();
-            string apiURL = "https://localhost:7158/api/Product";
+            string apiURL = "https://localhost:44308/api/Product";
 
             var response = await httpClient.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
@@ -26,7 +26,7 @@ namespace LaptopShop_Web.Controllers
 
             //using (var client = new HttpClient())
             //{
-            //    client.BaseAddress = new Uri("https://localhost:7158/api/");
+            //    client.BaseAddress = new Uri("https://localhost:44308/api/");
             //    //HTTP GET
             //    var responseTask = client.GetAsync("Product");
             //    responseTask.Wait();
@@ -53,7 +53,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Create()
         {
             //var httpClient = new HttpClient(); // tạo 1 http client để call api
-            //var responseManufacturer = await httpClient.GetAsync("https://localhost:7158/api/Manufacturer");
+            //var responseManufacturer = await httpClient.GetAsync("https://localhost:44308/api/Manufacturer");
 
             //string apiDataManufacturer = await responseManufacturer.Content.ReadAsStringAsync();
             //ViewBag.listManufacturer = JsonConvert.DeserializeObject<List<Cpu>>(apiDataManufacturer);
@@ -68,7 +68,7 @@ namespace LaptopShop_Web.Controllers
 
         var httpClient = new HttpClient();
 
-        string apiURL = "https://localhost:7158/api/Product";
+        string apiURL = "https://localhost:44308/api/Product";
 
         var json = JsonConvert.SerializeObject(product);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -87,7 +87,7 @@ namespace LaptopShop_Web.Controllers
         //product.IDManufacturer = listManufacturers.FirstOrDefault(x => x.Name == productView.NameManufacturer).Id;
         //using (var client = new HttpClient())
         //{
-        //    client.BaseAddress = new Uri("https://localhost:7158/api/Product");
+        //    client.BaseAddress = new Uri("https://localhost:44308/api/Product");
 
         //    //HTTP POST
         //    var postTask = client.PostAsJsonAsync<Product>("Product", product);
@@ -107,7 +107,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var httpClient = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/Produt{id}";
+            string apiURL = $"https://localhost:44308/api/Produt{id}";
 
             var response = await httpClient.GetAsync(apiURL);
 
@@ -121,7 +121,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Product");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Product");
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync(client.BaseAddress, product);
@@ -138,7 +138,7 @@ namespace LaptopShop_Web.Controllers
             return View();
             //using (var client = new HttpClient())
             //{
-            //    client.BaseAddress = new Uri("https://localhost:7158/api/Product");
+            //    client.BaseAddress = new Uri("https://localhost:44308/api/Product");
 
             //    //HTTP POST
             //    var putTask = client.PutAsJsonAsync<Product>("Product", product);
@@ -158,7 +158,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var httpClient = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/Product/id?Id={id}";
+            string apiURL = $"https://localhost:44308/api/Product/id?Id={id}";
 
             var response = await httpClient.DeleteAsync(apiURL);
             if (response.IsSuccessStatusCode)
@@ -169,7 +169,7 @@ namespace LaptopShop_Web.Controllers
             return BadRequest();
             //using (var client = new HttpClient())
             //{
-            //    client.BaseAddress = new Uri($"https://localhost:7158/api/Product/id?Id={id}");
+            //    client.BaseAddress = new Uri($"https://localhost:44308/api/Product/id?Id={id}");
 
             //    //HTTP DELETE
             //    var deleteTask = client.DeleteAsync(client.BaseAddress);

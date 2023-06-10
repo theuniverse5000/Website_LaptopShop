@@ -19,7 +19,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> GetAllScreens()
         {
-            string ApiURL = "https://localhost:7158/api/Screen";
+            string ApiURL = "https://localhost:44308/api/Screen";
             var response = await httpClient.GetAsync(ApiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var screen = JsonConvert.DeserializeObject<List<Screen>>(apiData);
@@ -33,7 +33,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> AddSc(Screen s)
         {
 
-            string apiURL = "https://localhost:7158/api/Screen/add-screen";
+            string apiURL = "https://localhost:44308/api/Screen/add-screen";
             var content = new StringContent(JsonConvert.SerializeObject(s), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(apiURL, content);
 
@@ -48,7 +48,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> Details(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/Screen/id?id={Id}";
+            string apiURL = $"https://localhost:44308/api/Screen/id?id={Id}";
             var response = await httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var screen = JsonConvert.DeserializeObject<Screen>(apidata);
@@ -57,7 +57,7 @@ namespace LaptopShop_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edits(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/Screen/id?id={Id}";
+            string apiURL = $"https://localhost:44308/api/Screen/id?id={Id}";
             var response = await httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var screen = JsonConvert.DeserializeObject<Screen>(apidata);
@@ -67,7 +67,7 @@ namespace LaptopShop_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edits(Guid Id, Screen screen)
         {
-            string apiURL = $"https://localhost:7158/api/Screen/update-screen?id={Id}";
+            string apiURL = $"https://localhost:44308/api/Screen/update-screen?id={Id}";
             var content = new StringContent(JsonConvert.SerializeObject(screen), Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(apiURL, content);
             if (response.IsSuccessStatusCode)
@@ -79,7 +79,7 @@ namespace LaptopShop_Web.Controllers
 
         public async Task<IActionResult> Deletes(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/Screen/{Id}";
+            string apiURL = $"https://localhost:44308/api/Screen/{Id}";
 
             var response = await httpClient.DeleteAsync(apiURL);
             if (response.IsSuccessStatusCode)

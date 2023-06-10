@@ -20,7 +20,7 @@ namespace LaptopShop_Web.Controllers
             IEnumerable<CardVGA> _cardVGA = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/");
+                client.BaseAddress = new Uri("https://localhost:44308/api/");
 
                 var responseTask = client.GetAsync("CardVGA");
                 responseTask.Wait();
@@ -57,7 +57,7 @@ namespace LaptopShop_Web.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/CardVGA");
+                client.BaseAddress = new Uri("https://localhost:44308/api/CardVGA");
 
                 var postTask = client.PostAsJsonAsync<CardVGA>("CardVGA", _cardVGA);
                 postTask.Wait();
@@ -76,7 +76,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Update(Guid id)
         {
             var client = new HttpClient();
-            string apiURL = $"https://localhost:7158/api/CardVGA{id}";
+            string apiURL = $"https://localhost:44308/api/CardVGA{id}";
 
             var response = await client.GetAsync(apiURL);
             string apiData = await response.Content.ReadAsStringAsync();
@@ -88,7 +88,7 @@ namespace LaptopShop_Web.Controllers
         {
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/CardVGA");
+                client.BaseAddress = new Uri("https://localhost:44308/api/CardVGA");
 
                 var putTask = client.PutAsJsonAsync(client.BaseAddress, _cardVGA);
                 putTask.Wait();
@@ -106,7 +106,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/CardVGA/id?Id={id}");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/CardVGA/id?Id={id}");
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
                 deleteTask.Wait();
 

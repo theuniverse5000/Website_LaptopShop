@@ -1,6 +1,6 @@
-﻿using LaptopShop_Web.Services;
+﻿using Data.Models;
+using LaptopShop_Web.Services;
 using Microsoft.AspNetCore.Mvc;
-using Data.Models;
 
 namespace LaptopShop_Web.Controllers
 {
@@ -12,7 +12,7 @@ namespace LaptopShop_Web.Controllers
         //    IEnumerable<Color> _color = null;
         //    using(var client  = new HttpClient())
         //    {
-        //        client.BaseAddress = new Uri("https://localhost:7158/api/Color");
+        //        client.BaseAddress = new Uri("https://localhost:44308/api/Color");
         //        var responseTask = client.GetAsync("Color");
         //        responseTask.Wait();
 
@@ -31,7 +31,7 @@ namespace LaptopShop_Web.Controllers
             IEnumerable<Color> _Color = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Color");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Color");
                 var responseTask = client.GetAsync("Color");
                 responseTask.Wait();
 
@@ -67,7 +67,7 @@ namespace LaptopShop_Web.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7158/api/Color");
+                client.BaseAddress = new Uri("https://localhost:44308/api/Color");
                 var postTask = client.PostAsJsonAsync<Color>("Color", _Color);
                 postTask.Wait();
 
@@ -94,7 +94,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/Color");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/Color");
 
                 var putTask = client.PutAsJsonAsync(client.BaseAddress, _Color);
                 putTask.Wait();
@@ -111,7 +111,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7158/api/Color/id?Id={id}");
+                client.BaseAddress = new Uri($"https://localhost:44308/api/Color/id?Id={id}");
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
                 deleteTask.Wait();
                 var result = deleteTask.Result;

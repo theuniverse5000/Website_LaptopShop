@@ -19,7 +19,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> GetHDs()
         {
-            string ApiURL = "https://localhost:7158/api/HardDrive";
+            string ApiURL = "https://localhost:44308/api/HardDrive";
             var response = await httpClient.GetAsync(ApiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var hd = JsonConvert.DeserializeObject<List<HardDrive>>(apiData);
@@ -33,7 +33,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> AddHD(HardDrive h)
         {
 
-            string apiURL = "https://localhost:7158/api/HardDrive/add-harddrive";
+            string apiURL = "https://localhost:44308/api/HardDrive/add-harddrive";
             var content = new StringContent(JsonConvert.SerializeObject(h), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(apiURL, content);
 
@@ -48,7 +48,7 @@ namespace LaptopShop_Web.Controllers
         }
         //public async Task<IActionResult> Details(Guid Id)
         //{
-        //    string apiURL = $"https://localhost:7158/api/HardDrive/id?id={Id}";
+        //    string apiURL = $"https://localhost:44308/api/HardDrive/id?id={Id}";
         //    var response = await httpClient.GetAsync(apiURL);
         //    string apidata = await response.Content.ReadAsStringAsync();
         //    var hd = JsonConvert.DeserializeObject<HardDrive>(apidata);
@@ -57,7 +57,7 @@ namespace LaptopShop_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edits(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/HardDrive/id?id={Id}";
+            string apiURL = $"https://localhost:44308/api/HardDrive/id?id={Id}";
             var response = await httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var hd = JsonConvert.DeserializeObject<HardDrive>(apidata);
@@ -67,7 +67,7 @@ namespace LaptopShop_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edits(Guid Id, HardDrive h)
         {
-            string apiURL = $"https://localhost:7158/api/HardDrive/update-harddrive?id={Id}";
+            string apiURL = $"https://localhost:44308/api/HardDrive/update-harddrive?id={Id}";
             var content = new StringContent(JsonConvert.SerializeObject(h), Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(apiURL, content);
             if (response.IsSuccessStatusCode)
@@ -79,7 +79,7 @@ namespace LaptopShop_Web.Controllers
 
         public async Task<IActionResult> Deletes(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/HardDrive/{Id}";
+            string apiURL = $"https://localhost:44308/api/HardDrive/{Id}";
 
             var response = await httpClient.DeleteAsync(apiURL);
             if (response.IsSuccessStatusCode)

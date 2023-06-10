@@ -1,5 +1,4 @@
 ﻿using Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -21,7 +20,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> GetAllUsers()
         {
-            string ApiURL = "https://localhost:7158/api/User";
+            string ApiURL = "https://localhost:44308/api/User";
             var response = await httpClient.GetAsync(ApiURL);
             string apiData = await response.Content.ReadAsStringAsync();
             var use = JsonConvert.DeserializeObject<List<User>>(apiData);
@@ -36,7 +35,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> AddUsers(User u)
         {
 
-            string apiURL = "https://localhost:7158/api/User/add-use";
+            string apiURL = "https://localhost:44308/api/User/add-use";
             var content = new StringContent(JsonConvert.SerializeObject(u), Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(apiURL, content);
 
@@ -51,7 +50,7 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> DetailsUse(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/User/id?id={Id}";
+            string apiURL = $"https://localhost:44308/api/User/id?id={Id}";
             var response = await httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<User>(apidata);
@@ -60,7 +59,7 @@ namespace LaptopShop_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditsUse(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/User/id?id={Id}";
+            string apiURL = $"https://localhost:44308/api/User/id?id={Id}";
             var response = await httpClient.GetAsync(apiURL);
             string apidata = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<User>(apidata);
@@ -70,7 +69,7 @@ namespace LaptopShop_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditsUse(Guid Id, User u)
         {
-            string apiURL = $"https://localhost:7158/api/User/update-use?id={Id}";
+            string apiURL = $"https://localhost:44308/api/User/update-use?id={Id}";
             var content = new StringContent(JsonConvert.SerializeObject(u), Encoding.UTF8, "application/json");
             var response = await httpClient.PutAsync(apiURL, content);
             if (response.IsSuccessStatusCode)
@@ -82,7 +81,7 @@ namespace LaptopShop_Web.Controllers
 
         public async Task<IActionResult> DeletesUse(Guid Id)
         {
-            string apiURL = $"https://localhost:7158/api/User/id?id={Id}";
+            string apiURL = $"https://localhost:44308/api/User/id?id={Id}";
 
             var response = await httpClient.DeleteAsync(apiURL);
             if (response.IsSuccessStatusCode)
