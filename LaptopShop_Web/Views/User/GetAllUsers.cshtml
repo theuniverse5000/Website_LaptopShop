@@ -5,7 +5,7 @@
 @using Newtonsoft.Json
 @{
      HttpClient _httpClient = new HttpClient();
-    string apiUrl = "https://localhost:7158/api/Role";
+    string apiUrl = "https://localhost:44308/api/Role";
     var response = await _httpClient.GetAsync(apiUrl);
     string apidata = await response.Content.ReadAsStringAsync();
     var roles = JsonConvert.DeserializeObject<List<Role>>(apidata);

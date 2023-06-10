@@ -6,7 +6,7 @@
 
 @{
     HttpClient _HttpClient = new HttpClient();
-    string apiurl = "https://localhost:7158/api/Role";
+    string apiurl = "https://localhost:44308/api/Role";
     var response = await _HttpClient.GetAsync(apiurl);
     string apidata = await response.Content.ReadAsStringAsync();
      var role = JsonConvert.DeserializeObject<List<Role>>(apidata);
