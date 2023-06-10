@@ -1,9 +1,4 @@
-﻿using Data.Models;
-using Data.Models.ViewModels;
-using LaptopShop_Web.Services;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LaptopShop_Web.Controllers
+﻿namespace LaptopShop_Web.Controllers
 {
     public class CartController : Controller
     {
@@ -13,7 +8,7 @@ namespace LaptopShop_Web.Controllers
 
             Guid getUserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
             //   ViewBag.GetCartForUser = _cartDetailServices.GetCartDetailJoinProductDetail().Where(a => a.UserId == getUserId);
-            var listCartDetail = await callAPI.GetAll<CartDetailView>("https://localhost:44308/api/CartDetail");
+            var listCartDetail = await callAPI.GetAll<CartDetailView>("https://localhost:7158/api/CartDetail");
             var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
             ViewBag.itemsInCart = itemInCart;
             return View(itemInCart);
@@ -22,7 +17,7 @@ namespace LaptopShop_Web.Controllers
         {
 
             var listCart = await callAPI.GetAll<Cart>("https://localhost:44308/api/Cart");
-            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706"));
+            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("41008f74-9aa4-4e4f-97b1-7cd412be7e97"));
             if (cartNgan == null)
             {
                 using (var client = new HttpClient())
@@ -31,7 +26,7 @@ namespace LaptopShop_Web.Controllers
                     t.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
                     t.Description = "Chất lượng bình thường";
 
-                    client.BaseAddress = new Uri("https://localhost:44308/api/Cart");
+                    client.BaseAddress = new Uri("https://localhost:7158/api/Cart");
                     var postTask = client.PostAsJsonAsync<Cart>("Cart", t);
                     postTask.Wait();
                 }
@@ -43,7 +38,7 @@ namespace LaptopShop_Web.Controllers
                 x.IdProductDetails = id;
                 x.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
                 x.Quantity = 1;
-                client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail");
+                client.BaseAddress = new Uri("https://localhost:7158/api/CartDetail");
                 var postTask = client.PostAsJsonAsync<CartDetail>("CartDetail", x);
                 postTask.Wait();
                 var result = postTask.Result;
@@ -58,13 +53,15 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> CongOneQuantity(Guid id)
         {
+            //  Guid getUserId = Guid.Parse("F9605C6D-FBA8-4220-BFAA-F2C629008745");
             var listCartDetail = await callAPI.GetAll<CartDetail>($"https://localhost:44308/api/CartDetail/GetCartDetailNoJoin");
+            //   var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
             var x = listCartDetail.FirstOrDefault(x => x.Id == id);
             x.Quantity += 1;
             using (var client = new HttpClient())
             {
                 //
-                client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail/UpdateQuantity");
+                client.BaseAddress = new Uri("https://localhost:7158/api/CartDetail/UpdateQuantity");
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync<CartDetail>(client.BaseAddress, x);
@@ -82,13 +79,15 @@ namespace LaptopShop_Web.Controllers
         }
         public async Task<IActionResult> TruOneQuantity(Guid id)
         {
+            //  Guid getUserId = Guid.Parse("F9605C6D-FBA8-4220-BFAA-F2C629008745");
             var listCartDetail = await callAPI.GetAll<CartDetail>($"https://localhost:44308/api/CartDetail/GetCartDetailNoJoin");
+            //   var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
             var x = listCartDetail.FirstOrDefault(x => x.Id == id);
             if (x.Quantity <= 1)
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri($"https://localhost:44308/api/CartDetail/id?Id={id}");
+                    client.BaseAddress = new Uri($"https://localhost:7158/api/CartDetail/id?Id={id}");
 
                     //HTTP DELETE
                     var deleteTask = client.DeleteAsync(client.BaseAddress);
@@ -108,7 +107,7 @@ namespace LaptopShop_Web.Controllers
                 using (var client = new HttpClient())
                 {
                     //
-                    client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail/UpdateQuantity");
+                    client.BaseAddress = new Uri("https://localhost:7158/api/CartDetail/UpdateQuantity");
 
                     //HTTP POST
                     var putTask = client.PutAsJsonAsync<CartDetail>(client.BaseAddress, x);
@@ -129,7 +128,7 @@ namespace LaptopShop_Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:44308/api/CartDetail/id?Id={id}");
+                client.BaseAddress = new Uri($"https://localhost:7158/api/CartDetail/id?Id={id}");
 
                 //HTTP DELETE
                 var deleteTask = client.DeleteAsync(client.BaseAddress);
