@@ -49,10 +49,12 @@
     <div class="form-floating col-md-6">
         <input asp-for="Name" type="text" class="form-control" placeholder="Ten" required>
         <label for="">Tên</label>
+        <div class="invalid-feedback">Không được để trống</div>
     </div>
     <div class="form-floating col-md-6">
         <input asp-for="ThongSo" type="text" class="form-control" placeholder="ThongSo" required>
         <label for="">Thông Số</label>
+        <div class="invalid-feedback">Không được để trống</div>
     </div>
 
     <p></p>
@@ -62,8 +64,9 @@
 
 </form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div style="padding-top: 20px">
+    @*<a asp-action="Index">Back to List</a>*@
+    <a asp-controller="Cpu" asp-action="ShowAll" class="btn btn-outline-dark">Back to List</a>
 </div>
 
 @section Scripts {
