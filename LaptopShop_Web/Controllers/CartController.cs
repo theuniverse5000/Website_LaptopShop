@@ -11,7 +11,7 @@ namespace LaptopShop_Web.Controllers
         public async Task<IActionResult> Index()
         {
 
-            Guid getUserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
+            Guid getUserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
             //   ViewBag.GetCartForUser = _cartDetailServices.GetCartDetailJoinProductDetail().Where(a => a.UserId == getUserId);
             var listCartDetail = await callAPI.GetAll<CartDetailView>("https://localhost:44308/api/CartDetail");
             var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
@@ -22,13 +22,13 @@ namespace LaptopShop_Web.Controllers
         {
 
             var listCart = await callAPI.GetAll<Cart>("https://localhost:44308/api/Cart");
-            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706"));
+            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72"));
             if (cartNgan == null)
             {
                 using (var client = new HttpClient())
                 {
                     Cart t = new Cart();
-                    t.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
+                    t.UserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
                     t.Description = "Chất lượng bình thường";
 
                     client.BaseAddress = new Uri("https://localhost:44308/api/Cart");
@@ -41,7 +41,7 @@ namespace LaptopShop_Web.Controllers
                 CartDetail x = new CartDetail();
                 x.Id = new Guid();
                 x.IdProductDetails = id;
-                x.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
+                x.UserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
                 x.Quantity = 1;
                 client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail");
                 var postTask = client.PostAsJsonAsync<CartDetail>("CartDetail", x);

@@ -16,9 +16,9 @@ namespace LaptopShop_Web.Controllers
             string apiDataUser = await reponseUser.Content.ReadAsStringAsync();
             string apiDataCartDetail = await reponseCartDetail.Content.ReadAsStringAsync();
             var listUser = JsonConvert.DeserializeObject<List<User>>(apiDataUser);
-            var thao = listUser.FirstOrDefault(x => x.Id == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706"));
+            var thao = listUser.FirstOrDefault(x => x.Id == Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72"));
             var listCartDetail = JsonConvert.DeserializeObject<List<CartDetailView>>(apiDataCartDetail);
-            var listItemInCart = listCartDetail.Where(x => x.UserId == Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706")).ToList();
+            var listItemInCart = listCartDetail.Where(x => x.UserId == Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72")).ToList();
             Bill bill = new Bill();
             bill.Id = Guid.NewGuid();
             bill.Ma = "Bill_" + DateTime.Now.ToString();
@@ -27,7 +27,7 @@ namespace LaptopShop_Web.Controllers
             bill.HoTenKhachHang = thao.HoTen;
             bill.DiaChiKhachHang = thao.DiaChi;
             bill.Status = 0;
-            bill.UserId = Guid.Parse("c0e4a087-e92a-45f1-9675-24106ba98706");
+            bill.UserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
             var reponseVoucher = await httpClient.GetAsync("https://localhost:44308/api/Voucher");
             string apiDataVoucher = await reponseVoucher.Content.ReadAsStringAsync();
             var listVoucher = JsonConvert.DeserializeObject<List<Voucher>>(apiDataVoucher);

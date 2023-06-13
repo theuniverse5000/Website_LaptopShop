@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Models;
+﻿using Data.Models;
 
 namespace Data.Services.Interfaces
 {
@@ -15,6 +10,9 @@ namespace Data.Services.Interfaces
         Task<bool> Add(User user);
         Task<User> GetById(Guid id);
         Task<List<string>> GetByName(string name);
+        Task<bool> IsClient(string username, string password);
+        Task<bool> IsAdministrator(string username, string password);
+        string GenerateTokenString(string username, string password);
 
     }
 }

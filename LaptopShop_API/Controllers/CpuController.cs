@@ -55,7 +55,7 @@ namespace LaptopShop_API.Controllers
         [HttpGet("id")]
         public async Task<ActionResult> GetCpuById(Guid id)
         {
-            if(await _cpuServices.GetCpuById(id) == null)
+            if (await _cpuServices.GetCpuById(id) == null)
             {
                 return NotFound("Không tìm thấy");
             }

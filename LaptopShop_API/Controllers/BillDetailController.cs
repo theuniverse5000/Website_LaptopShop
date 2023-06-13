@@ -20,7 +20,7 @@ namespace LaptopShop_API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllBillDetails()
         {
-            var listBillDetail = await _billDetailServices.GetAllBillDetails();
+            var listBillDetail = await _billDetailServices.GetBillDetailJoinFull();
             return Ok(listBillDetail);
 
         }

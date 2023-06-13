@@ -1,5 +1,4 @@
-﻿
-using Data.Services.Implements;
+﻿using Data.Services.Implements;
 using Data.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);

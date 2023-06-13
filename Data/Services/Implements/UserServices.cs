@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Services.Interfaces;
-using Data.Models;
-using Data.Models;
+﻿using Data.Models;
+using Data.Models.ViewModels;
 using Data.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Data.Services.Implements
 {
     public class UserServices : IUserServices
     {
         ApplicationDbContext _context;
+        private readonly IConfiguration _config;
         public UserServices()
         {
             _context = new ApplicationDbContext();
+
         }
+
         public async Task<bool> Add(User user)
         {
             try
@@ -87,11 +88,38 @@ namespace Data.Services.Implements
             return new List<string>();
         }
 
+        public async Task<bool> IsAdministrator(string username, string password)
+        {
+            List<UserView> thao = new List<UserView>();
+            thao = (from a in _context.Users.ToList()
+                    join b in _context.Roles.ToList() on a.IdRole equals b.Id
+                    select new UserView
+                    {
+                        Id = a.Id,
+                        Username = a.Username,
+                        Password = a.Password,
+                        Status = a.Status,
+                        RoleName = b.RoleName
+                    }
+                ).ToList();
+
+            var linh = thao.FirstOrDefault(a => a.Username == username && a.Password == password && a.Status == 1 && a.RoleName == "Admin");
+            if (linh != null) return true;
+            return false;
+        }
+
+        public async Task<bool> IsClient(string username, string password)
+        {
+            var thao = GetAllUser().Result.FirstOrDefault(a => a.Username == username && a.Password == password && a.Status == 1);
+            if (thao != null) return true;
+            return false;
+        }
+
         public async Task<bool> Update(User u)
         {
             try
             {
-               var c = _context.Users.Find(u.Id);
+                var c = _context.Users.Find(u.Id);
                 c.Username = u.Username;
                 c.Password = u.Password;
                 c.Status = u.Status;
@@ -104,6 +132,28 @@ namespace Data.Services.Implements
             {
                 return false;
             }
+        }
+        public string GenerateTokenString(string username, string password)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email,username),
+                new Claim(ClaimTypes.Role,"Admin"),
+            };
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value));
+
+            var signingCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
+
+            var securityToken = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(60),
+                issuer: _config.GetSection("Jwt:Issuer").Value,
+                audience: _config.GetSection("Jwt:Audience").Value,
+                signingCredentials: signingCred);
+
+            string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
+            return tokenString;
         }
     }
 }

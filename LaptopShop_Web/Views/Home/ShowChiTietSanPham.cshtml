@@ -7,7 +7,7 @@
         <div class="caption">
            
                     <a style="color: red;">
-                        Deal:$@Model.Price
+                        Giá bán:$@Model.Price
                         <p>Mã sản phẩm : @Model.Ma</p>
                         <p>Tên sản phẩm : @Model.NameProduct</p>
                         <p>Màu sắc : @Model.NameColor</p>
@@ -33,19 +33,29 @@
                                 <tr class="table-danger">
                                     <th scope="row">1</th>
                                     <td>CPU</td>
-                                    <td>@Model.NameCpu</td>
+                            <td>@Model.NameCpu - @Model.ThongSoCpu</td>
                                 </tr>
                                 <tr class="table-warning">
                                     <th scope="row">2</th>
                                     <td>RAM</td>
-                                    <td>@Model.ThongSoRam</td>
+                            <td>@Model.ThongSoRam - @Model.SoKheCamRam - @Model.MoTaRam</td>
                                 </tr>
                                 <tr class="table-danger">
                                     <th scope="row">3</th>
                                     <td>Ổ cứng</td>
-                                    <td> @Model.Id</td>
+                                 <td> @Model.ThongSoHardDrive - @Model.MoTaHardDrive</td>
 
                                 </tr>
+                        <tr class="table-warning">
+                            <th scope="row">4</th>
+                            <td>Card đồ họa</td>
+                            <td>@Model.TenCardVGA - @Model.ThongSoCardVGA</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <th scope="row">4</th>
+                            <td>Màn hình</td>
+                            <td>@Model.KichCoManHinh - @Model.TanSoManHinh - @Model.ChatLieuManHinh</td>
+                        </tr>
 
                             </tbody>
                         </table>
