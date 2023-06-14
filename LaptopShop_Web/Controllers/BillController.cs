@@ -7,18 +7,20 @@ namespace LaptopShop_Web.Controllers
 {
     public class BillController : Controller
     {
+        static Guid getUserId;
         public async Task<IActionResult> Create(string maVoucher)
         {
-
-            var httpClient = new HttpClient(); // tạo 1 http client để call api
+            var username = HttpContext.Session.GetString("Username");
+            HttpClient httpClient = new HttpClient();
+            var listUser = await httpClient.GetFromJsonAsync<List<User>>("https://localhost:44308/api/User");
+            getUserId = listUser.FirstOrDefault(x => x.Username == username).Id;
             var reponseUser = await httpClient.GetAsync("https://localhost:44308/api/User");
             var reponseCartDetail = await httpClient.GetAsync("https://localhost:44308/api/CartDetail");
             string apiDataUser = await reponseUser.Content.ReadAsStringAsync();
             string apiDataCartDetail = await reponseCartDetail.Content.ReadAsStringAsync();
-            var listUser = JsonConvert.DeserializeObject<List<User>>(apiDataUser);
-            var thao = listUser.FirstOrDefault(x => x.Id == Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72"));
+            var thao = listUser.FirstOrDefault(x => x.Id == getUserId);
             var listCartDetail = JsonConvert.DeserializeObject<List<CartDetailView>>(apiDataCartDetail);
-            var listItemInCart = listCartDetail.Where(x => x.UserId == Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72")).ToList();
+            var listItemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
             Bill bill = new Bill();
             bill.Id = Guid.NewGuid();
             bill.Ma = "Bill_" + DateTime.Now.ToString();
@@ -27,7 +29,7 @@ namespace LaptopShop_Web.Controllers
             bill.HoTenKhachHang = thao.HoTen;
             bill.DiaChiKhachHang = thao.DiaChi;
             bill.Status = 0;
-            bill.UserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
+            bill.UserId = getUserId;
             var reponseVoucher = await httpClient.GetAsync("https://localhost:44308/api/Voucher");
             string apiDataVoucher = await reponseVoucher.Content.ReadAsStringAsync();
             var listVoucher = JsonConvert.DeserializeObject<List<Voucher>>(apiDataVoucher);

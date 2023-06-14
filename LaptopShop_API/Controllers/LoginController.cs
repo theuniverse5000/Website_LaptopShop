@@ -9,21 +9,27 @@ namespace LaptopShop_API.Controllers
     public class LoginController : ControllerBase
     {
         IUserServices _userServices = new UserServices();
-        [HttpGet]
-        public async Task<IActionResult> Login(string username, string password)
+        [HttpGet("admin")]
+        public async Task<bool> LoginAdmin(string username, string password)
         {
-            //if (await _userServices.IsAdministrator(username, password))
-            //{
-            //    var tokenString = _userServices.GenerateTokenString(username, password);
-            //    return Ok(tokenString);
+            if (await _userServices.IsAdministrator(username, password))
+            {
+                return true;
 
-            //}
-            //else if (await _userServices.IsClient(username, password))
-            //{
-            //    return Ok("Client");
+            }
 
-            //}
-            return BadRequest("Sai");
+            return false;
+
+        }
+        [HttpGet("client")]
+        public async Task<bool> LoginClent(string username, string password)
+        {
+            if (await _userServices.IsClient(username, password))
+            {
+                return true;
+
+            }
+            return false;
 
         }
     }

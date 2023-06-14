@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    @using Microsoft.AspNetCore.Http;
+    var roleData = ViewContext.HttpContext.Session.GetString("RoleUser");
+    var username = ViewContext.HttpContext.Session.GetString("Username");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,19 +19,13 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LaptopShop_Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Giới thiệu</a>
                         </li>
@@ -35,9 +35,37 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Khuyến mãi</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Đăng nhập</a>
-                        </li>
+                        @if (username == null)
+                        {
+                             <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="CheckLogin">Đăng nhập</a>
+                            </li>
+                        }
+                        else if (roleData == "admin")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin: @username</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Login" asp-action="LogOut">Đăng xuất</a>
+                                    <a class="dropdown-item" href="#">Thông tin cá nhân</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Bill/ShowBillForUser">Đơn hàng của tôi</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Người dùng: @username</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Login" asp-action="LogOut">Đăng xuất</a>
+                                    <a class="dropdown-item" href="#">Thông tin cá nhân</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Bill/ShowBillForUser">Đơn hàng của tôi</a>
+                                </div>
+                            </li>
+                        }
+
                     </ul>
                     <form class="d-flex" asp-controller="ProductDetail" asp-action="ShowListProduct" role="search" method="get">
                         <input class="form-control me-2" type="search" placeholder="Nhập tên sản phẩm" aria-label="Search" name="nameProduct">
@@ -60,58 +88,62 @@
                 </div>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="ProductDetail" asp-action="Index">Chi tiết sản phẩm</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Bill" asp-action="QuanLyBill">Hóa đơn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Product" asp-action="ShowAll">Sản phẩm</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Manufacturer" asp-action="Index">
-                                Nhà sản xuất
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Image" asp-action="Index">Hình ảnh</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Color" asp-action="Index">Màu sắc</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Ram" asp-action="ShowAll">Ram</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Cpu" asp-action="ShowAll">Cpu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="HardDrive" asp-action="GetHDs">Ổ cứng</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="CardVGA" asp-action="Index">CardVGA</a>
-                        </li>       
-                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Screen" asp-action="GetAllScreens">Màn hình</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Voucher" asp-action="Index">Voucher</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="User" asp-action="GetAllUsers">Tài khoản</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" asp-controller="Role" asp-action="Index">Chức vụ</a>
-                        </li>
+        @if(roleData == "admin")
+        {
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-controller="ProductDetail" asp-action="Index">Chi tiết sản phẩm</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarColor01">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Bill" asp-action="QuanLyBill">Hóa đơn</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Product" asp-action="ShowAll">Sản phẩm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Manufacturer" asp-action="Index">
+                                    Nhà sản xuất
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Image" asp-action="Index">Hình ảnh</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Color" asp-action="Index">Màu sắc</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Ram" asp-action="ShowAll">Ram</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Cpu" asp-action="ShowAll">Cpu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="HardDrive" asp-action="GetHDs">Ổ cứng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="CardVGA" asp-action="Index">CardVGA</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Screen" asp-action="GetAllScreens">Màn hình</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Voucher" asp-action="Index">Voucher</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="User" asp-action="GetAllUsers">Tài khoản</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="Role" asp-action="Index">Chức vụ</a>
+                            </li>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        }
+       
     </header>
     <div class="container">
         <main role="main" class="pb-3">

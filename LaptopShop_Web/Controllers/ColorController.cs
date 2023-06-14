@@ -6,6 +6,7 @@ namespace LaptopShop_Web.Controllers
 {
     public class ColorController : Controller
     {
+
         CallAPIServices _callAPI = new CallAPIServices();
         //public IActionResult Index()
         //{
@@ -25,7 +26,7 @@ namespace LaptopShop_Web.Controllers
         //    }
         //}
 
-
+        //   [Authorize]
         public Task<IActionResult> Index()
         {
             IEnumerable<Color> _Color = null;

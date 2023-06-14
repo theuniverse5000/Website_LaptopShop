@@ -8,10 +8,21 @@ namespace LaptopShop_Web.Controllers
     public class CartController : Controller
     {
         CallAPIServices callAPI = new CallAPIServices();
+        static Guid getUserId;
+
         public async Task<IActionResult> Index()
         {
+            var username = HttpContext.Session.GetString("Username");
+            if (username == null)
+            {
+                return RedirectToAction("CheckLogin", "Login");
+            }
+            HttpClient client = new HttpClient();
+            var listUser = await client.GetFromJsonAsync<List<User>>("https://localhost:44308/api/User");
 
-            Guid getUserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
+            getUserId = listUser.FirstOrDefault(x => x.Username == username).Id;
+
+            //   Guid getUserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
             //   ViewBag.GetCartForUser = _cartDetailServices.GetCartDetailJoinProductDetail().Where(a => a.UserId == getUserId);
             var listCartDetail = await callAPI.GetAll<CartDetailView>("https://localhost:44308/api/CartDetail");
             var itemInCart = listCartDetail.Where(x => x.UserId == getUserId).ToList();
@@ -22,13 +33,13 @@ namespace LaptopShop_Web.Controllers
         {
 
             var listCart = await callAPI.GetAll<Cart>("https://localhost:44308/api/Cart");
-            var cartNgan = listCart.FirstOrDefault(x => x.UserId == Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72"));
+            var cartNgan = listCart.FirstOrDefault(x => x.UserId == getUserId);
             if (cartNgan == null)
             {
                 using (var client = new HttpClient())
                 {
                     Cart t = new Cart();
-                    t.UserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
+                    t.UserId = getUserId;
                     t.Description = "Chất lượng bình thường";
 
                     client.BaseAddress = new Uri("https://localhost:44308/api/Cart");
@@ -41,7 +52,7 @@ namespace LaptopShop_Web.Controllers
                 CartDetail x = new CartDetail();
                 x.Id = new Guid();
                 x.IdProductDetails = id;
-                x.UserId = Guid.Parse("574a4e76-9dde-4f22-b89f-90a987765d72");
+                x.UserId = getUserId;
                 x.Quantity = 1;
                 client.BaseAddress = new Uri("https://localhost:44308/api/CartDetail");
                 var postTask = client.PostAsJsonAsync<CartDetail>("CartDetail", x);
