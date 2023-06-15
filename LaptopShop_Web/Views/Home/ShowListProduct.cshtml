@@ -1,0 +1,48 @@
+﻿
+@{
+    @using Data.Models
+    @using Data.Models.ViewModels
+    var listImage = (List<Image>)ViewBag.listImageIndex;
+    List<string> imageExtensions = new List<string>()
+    {
+        ".png", ".jpg", ".jpeg", ".gif", ".tiff", ".pdf", ".psv"
+    };
+}
+<div class="row">
+    @foreach (var t in (List<ProductDetailView>)ViewBag.listProductDetailIndex)
+    {
+        <div class="col-md-3">
+
+            <div class="thumbnail">
+                <p>
+                    @{
+                        var imageX = listImage.FirstOrDefault(x => x.IdProductDetail == t.Id);
+                        var linkImage = "";
+                        if (imageX != null)
+                        {
+                            linkImage = imageX.LinkImage;
+                        }
+                        var a = System.IO.Path.GetExtension(linkImage);
+                    }
+                    @if (@imageExtensions.Contains(a.Trim()))
+                    {
+                        <img src="/UploadImages/@linkImage" alt="Lights" style="width:300px; height: 260px;">
+                    }
+                    else
+                    {
+                    <p>Sản phẩm chưa có ảnh</p>
+                    <img src="/UploadImages/matcuoi.jpg" alt="Lights" style="width:270px; height: 230px;">
+                    }
+                <div class="caption">
+                    <center>
+                        <a asp-controller="Home" asp-action="ShowChiTietSanPham" asp-route-id="@t.Id">[Mới 100%]@t.NameProduct (@t.NameCpu, @t.ThongSoRam,@t.ThongSoHardDrive,@t.TenCardVGA,@t.TenManHinh)  </a><br>
+                        <strong><a style="color: red;"> $@t.Price </a></strong>
+                            @*  <del><a style="color:dimgray;">{{t.oldPrice}}đ</a></del>*@
+                    </center>
+                </div>
+                </p>
+            </div>
+
+        </div>
+    }
+</div>

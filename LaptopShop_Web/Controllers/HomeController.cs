@@ -36,6 +36,19 @@ namespace LaptopShop_Web.Controllers
             var ProductDetail = JsonConvert.DeserializeObject<ProductDetailView>(apiDataProductDetail);
             return View(ProductDetail);
         }
+        public async Task<IActionResult> ShowListProduct()
+        {
+            var httpClient = new HttpClient(); // tạo 1 http client để call api
+            var reponseProductDetail = await httpClient.GetAsync("https://localhost:44308/api/ProductDetail");
+            string apiDataProductDetail = await reponseProductDetail.Content.ReadAsStringAsync();
+            ViewBag.listProductDetailIndex = JsonConvert.DeserializeObject<List<ProductDetailView>>(apiDataProductDetail);
+            // Get Image
+            var reponseImage = await httpClient.GetAsync("https://localhost:44308/api/Image");
+            string apiDataImage = await reponseImage.Content.ReadAsStringAsync();
+            ViewBag.listImageIndex = JsonConvert.DeserializeObject<List<Image>>(apiDataImage);
+            var listProductDetail = JsonConvert.DeserializeObject<List<ProductDetailView>>(apiDataProductDetail);
+            return View(listProductDetail);
+        }
 
         public IActionResult Privacy()
         {

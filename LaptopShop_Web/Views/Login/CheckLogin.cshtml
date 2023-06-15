@@ -1,6 +1,17 @@
 ﻿
 <form asp-controller="Login" asp-action="CheckLogin" method="post">
-    <input name="username" />
-    <input name="password" />
-    <button type="submit">OK</button>
+    <div class="form-group">
+       
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="username" placeholder="Tài khoản">
+            <label for="floatingInput">Tài khoản</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password" placeholder="Mật khẩu">
+            <label for="floatingPassword">Mật khẩu</label>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-outline-danger">Đăng nhập</button>
+    </div>
+   
 </form>
